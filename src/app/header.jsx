@@ -24,18 +24,12 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <div className='flex justify-between items-center mx-3 mt-4 relative'>
+            <div className='flex justify-between items-center mx-3 mt-4'>
                 <div className='flex gap-2 h-fit'>
                     <Image src="/assets/img/btn-setting.png" width={34} height={34} className="active:scale-90 duration-100 cursor-pointer" />
                     <Image src="/assets/img/btn-sound.png" width={34} height={34} className="active:scale-90 duration-100 cursor-pointer" />
                 </div>
-                {/* <div className='active:scale-90 duration-100 cursor-pointer relative'>
-                    <Image src="/assets/img/bg-profildev.png" width={83} height={36} className="object-center" />
-                    <Image src="/assets/img/icon-dev.png" width={20} height={30} className="absolute right-2 -top-4" />
-                    <span className='outline-dev  font-cubano text-white text-xs absolute right-10 top-1'>Profil</span>
-                    <span className='outline-dev  font-cubano text-white text-xs absolute right-1 top-4'>Pengembang</span>
-                </div> */}
-                <div className='bg-profildev bg-right bg-contain bg-no-repeat w-24 h-10 relative'>
+                <div className='bg-profildev bg-right bg-contain bg-no-repeat w-24 h-10 relative active:scale-90 duration-100 cursor-pointer'>
                     <Image src="/assets/img/icon-dev.png" width={20} height={30} className="absolute right-2 -top-4" />
                     <div className='flex flex-col absolute right-1 top-1'>
                         <span className='outline-dev  font-cubano text-white text-xs'>Profil</span>
