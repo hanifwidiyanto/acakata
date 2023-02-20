@@ -8,7 +8,11 @@ export default function RootLayout({ children }) {
         head.js. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body className='w-full flex justify-center'>
+        <main className='sm:w-96 w-full'>
+          {children}
+        </main> 
+      </body>
     </html>
   )
 }
