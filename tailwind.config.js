@@ -12,6 +12,7 @@ module.exports = {
         'container-daftar': "url('/assets/img/container-daftar.png')",
         'btn-login': "url('/assets/img/btn-login.png')",
         'btn-nologin': "url('/assets/img/btn-nologin.png')",
+        'errorsign': "url('/assets/img/bg-error.png')",
       },
       fontFamily: {
         'cubano': ['cubano', 'sans-serif']

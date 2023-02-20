@@ -9,7 +9,7 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body className='w-full flex justify-center'>
-        <main className='sm:w-96 w-full'>
+        <main className='sm:w-96 w-full overflow-hidden'>
           {children}
         </main> 
       </body>

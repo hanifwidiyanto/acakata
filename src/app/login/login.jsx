@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from "framer-motion"
 import Link from 'next/link'
 import { useFormik } from 'formik'
@@ -8,10 +8,16 @@ import * as yup from 'yup'
 
 
 function Login() {
+
+
+
     const onSubmit = async (values, actions) => {
         // push db
         console.log('submitted')
+        console.log(actions)
     }
+
+
 
     const SchemaForm = yup.object().shape({
         dd: yup.string().required('Tanggal Lahir Kamu Harus Diisi Ya!'),
@@ -19,7 +25,7 @@ function Login() {
         year: yup.string().required('Tahun Lahir Kamu Harus Diisi Ya!'),
     })
 
-    const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
+    const { values, handleBlur, handleChange, handleSubmit, errors, isSubmitting, touched } = useFormik({
         initialValues: {
             dd: '',
             month: '',
@@ -27,20 +33,40 @@ function Login() {
         },
         validationSchema: SchemaForm,
         onSubmit
+
     })
-    console.log(values)
     return (
         <>
+            <audio autoPlay>
+                <source src="/assets/sound/sfx-jump.mp3" type="audio/mpeg" />
+            </audio>
+            {errors && Object.keys(errors).length > 0 && (
+                <div className='absolute top-20 flex justify-center sm:w-fit w-full'>
+                    <div>
+                        {Object.values(errors).map((error, index) => (
+
+                            <motion.div
+                                initial={{ y: "30%", opacity: "0" }}
+                                animate={{ y: "0%", opacity: "1" }}
+                                transition={{ delay: index * 1.2, duration: .2 }}
+
+
+                                className='bg-errorsign p-4 bg-center bg-contain bg-no-repeat grid place-content-center font-cubano text-sm text-white outline-title'>{error}</motion.div>
+                        ))}
+
+                    </div>
+                </div>
+            )}
             <motion.div
-                initial={{ y: "200%" }}
+                initial={{ y: "250%" }}
                 animate={{ y: "0%" }}
             >
-                <div className='bg-container-login w-full h-full bg-contain bg-no-repeat bg-center'>
+               <div className='bg-container-login w-72 h-64 bg-contain bg-no-repeat bg-center'>
                     <div className='flex justify-center w-full pt-5'>
-                        <h1 className='font-cubano text-3xl text-white outline-title'>login</h1>
+                        <h1 className='font-cubano text-3xl text-white outline-title'>masuk</h1>
                     </div>
 
-                    <div className='px-10 pt-8'>
+                    <div className='px-8 pt-8'>
                         <h2 className='outline-title text-white font-cubano text-lg'>Tanggal Lahir</h2>
                         <form className='mt-3' autoComplete='off' onSubmit={handleSubmit}>
                             <div className='flex w-full justify-between'>
@@ -109,17 +135,16 @@ function Login() {
                             </div>
                             <div className='flex justify-center w-full mt-5 active:scale-90 duration-100 cursor-pointer'>
                                 <div className='w-fit'>
-                                    <button type='submit' className='bg-btn-login font-cubano w-[110px] h-[36px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-lg'>masuk</button>
+                                    <button type='submit' className='bg-btn-login font-cubano w-[110px] h-[36px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-lg' disabled={isSubmitting}>masuk</button>
                                 </div>
                             </div>
                         </form>
 
                     </div>
                 </div>
-                <div className='px-6 pt-2 flex justify-between w-full'>
+                <div className='px-3 pt-2 flex justify-between w-full'>
                     <span className='font-cubano outline-title text-white text-lg '>belum punya akun? </span>
-                    <div className='active:scale-90 duration-100 cursor-pointer'>
-
+                    <div className='active:scale-90 duration-100 cursor-pointer' >
                         <Link href="./daftar" className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm'>daftar</Link>
                     </div>
                 </div>
