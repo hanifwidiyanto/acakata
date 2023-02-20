@@ -150,7 +150,7 @@ function Register() {
                 <div className='px-4 -mt-3 flex justify-between w-full'>
                     <span className='font-cubano outline-title text-white text-lg '>sudah punya akun?</span>
                     <div className='active:scale-90 duration-100 cursor-pointer'>
-                        <Link href="./login" className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm'>masuk </Link>
+                        <Link href="./masuk" className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm'>masuk </Link>
                     </div>
                 </div>
             </motion.div>

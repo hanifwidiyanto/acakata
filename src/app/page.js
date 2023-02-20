@@ -1,13 +1,14 @@
 import Image from 'next/image'
-import Login from './login'
-import Register from './register'
-
+import Footer from './footer'
+import Header from './header'
+import Play from './play'
 
 export default function Home() {
   return (
-   <div className='bg-login h-screen w-full bg-center bg-cover bg-no-repeat grid place-content-center'>
-      <Login />
-      {/* <Register /> */}
+   <div className='bg-home h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>
+     <Header />
+     <Play />
+     <Footer />
    </div>
   )
 }

@@ -17,3 +17,14 @@
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+ .outline-dev {
+  text-shadow:
+    -1px -1px 0 #903850,  
+     1px -1px 0 #903850,
+    -1px  1px 0 #903850,
+     1px  1px 0 #903850;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
