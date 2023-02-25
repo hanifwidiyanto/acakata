@@ -50,7 +50,7 @@ function Login() {
                                 animate={{ y: "0%", opacity: "1" }}
                                 transition={{ delay: index * 1.2, duration: .2 }}
 
-
+                                key={index}
                                 className='bg-errorsign p-4 bg-center bg-contain bg-no-repeat grid place-content-center font-cubano text-sm text-white outline-title'>{error}</motion.div>
                         ))}
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/legacy/image'
 
 function Level({ onCloseClick }) {
     const [display, setDisplay] = useState(false)
@@ -24,10 +25,12 @@ function Level({ onCloseClick }) {
         <>
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
             </div>
-            <motion.div 
-            className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-listlevel w-[300px] h-[370px] bg-center bg-contain bg-no-repeat flex flex-col justify-between items-center py-5'>
-                <img src="./assets/img/icon-close.png" alt="" className="absolute right-8 top-8 w-6 cursor-pointer active:scale-90 duration-100" onClick={onCloseClick} />
-                <div className='text-center'>
+            <motion.div
+                className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-listlevel w-[300px] h-[370px] bg-center bg-contain bg-no-repeat flex flex-col justify-between items-center py-5'>
+                <div className='absolute right-8 top-8 cursor-pointer active:scale-90 duration-100'>
+                    <Image src="/assets/img/icon-close.png" alt="" className="" onClick={onCloseClick} width={24} height={24} />
+                </div>
+                <div className='text-center pt-2'>
                     <span className='text-white font-cubano text-3xl outline-title'>level</span>
                 </div>
                 {level ?

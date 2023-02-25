@@ -13,6 +13,7 @@ module.exports = {
         'profildev': "url('/assets/img/bg-profildev.png')",
         'playbtn': "url('/assets/img/bg-playbtn.png')",
         'level': "url('/assets/img/bg-level.png')",
+        'info': "url('/assets/img/bg-leaderboard.png')",
         'container-login': "url('/assets/img/container-login.png')",
         'container-daftar': "url('/assets/img/container-daftar.png')",
         'container-timevisit': "url('/assets/img/container-timevisit.png')",

@@ -36,9 +36,9 @@ function Register() {
     })
     return (
         <>
-         <audio autoPlay>
+            <audio autoPlay>
                 <source src="/assets/sound/sfx-jump.mp3" type="audio/mpeg" />
-            </audio>    
+            </audio>
             {errors && Object.keys(errors).length > 0 && (
                 <div className='absolute top-10 flex justify-center sm:w-fit w-full'>
                     <div>
@@ -49,7 +49,7 @@ function Register() {
                                 animate={{ y: "0%", opacity: "1" }}
                                 transition={{ delay: index * 1.2, duration: .2 }}
 
-
+                                key={index}
                                 className='bg-errorsign p-4 bg-center bg-contain bg-no-repeat grid place-content-center font-cubano text-sm text-white outline-title'>{error}</motion.div>
                         ))}
 
