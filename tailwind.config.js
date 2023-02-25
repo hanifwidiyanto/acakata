@@ -29,6 +29,10 @@ module.exports = {
         'btn-right': "url('/assets/img/btn-right.png')",
         'btn-done': "url('/assets/img/btn-done.png')",
         'errorsign': "url('/assets/img/bg-error.png')",
+        'effect-finish-top': "url('/assets/img/effect-finish-top.png')",
+        'effect-finish-bottom': "url('/assets/img/effect-finish-bottom.png')",
+        'effect-cfinish-bottom': "url('/assets/img/effect-cfinish-bottom.png')",
+        'effect-cfinish-top': "url('/assets/img/effect-cfinish-top.png')",
       },
       fontFamily: {
         'cubano': ['cubano', 'sans-serif']
@@ -40,6 +44,9 @@ module.exports = {
         'bingu': '#1E2760',
         'bgform': '#D9D9D9',
         'bggameplay': '#DAF9FE',
+        'kuning': '#FDBE3D',
+        'biru': '#3771FF',
+        
       },
     },
     

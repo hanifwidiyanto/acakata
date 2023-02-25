@@ -4,10 +4,10 @@ import Game from './game'
 import Gameplay from './gameplay'
 import Header from './header'
 
-function page() {
+function page({params}) {
   return (
     <div className='bg-gameplay h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>
-        <Header />
+        <Header level={params.level} />
         <Gameplay />
         <Footer />
    </div>
