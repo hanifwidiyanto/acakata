@@ -26,6 +26,9 @@ function Level({ onCloseClick }) {
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
             </div>
             <motion.div
+             initial={{ opacity: 0, marginTop:'40%' }}
+             animate={{ opacity: 1, marginTop:0 }}
+             exit={{ opacity: 0 }}
                 className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-listlevel w-[300px] h-[370px] bg-center bg-contain bg-no-repeat flex flex-col justify-between items-center py-5'>
                 <div className='absolute right-8 top-8 cursor-pointer active:scale-90 duration-100'>
                     <Image src="/assets/img/icon-close.png" alt="" className="" onClick={onCloseClick} width={24} height={24} />
