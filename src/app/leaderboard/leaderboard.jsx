@@ -5,12 +5,12 @@ import React from 'react'
 export default function Leaderboard() {
   return (
     <div className='bg-container-leaderboard flex w-full h-[720px] bg-bottom bg-no-repeat bg-contain absolute -bottom-40  '>
-      <div className='mx-12 w-full pt-4'>
+      <div className='mx-14 w-full pt-4'>
         <div className="flex flex-col w-full items-center">
           <span className='font-cubano text-white outline-title text-3xl'>Papan peringkat</span>
           <span className='font-cubano text-white outline-title text-3xl'>maret 2023</span>
         </div>
-        <div className='mt-6 pt-2 pb-12 flex flex-col gap-5 h-4/6 overflow-scroll scroll-'>
+        <div className='mt-8 pt-4 pb-12 flex flex-col gap-5 h-4/6 overflow-scroll no-scrollbar'>
           <div className='bg-container-top-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover'>
             <div className="flex w-full justify-between h-full items-center px-3">
               <div className='flex gap-4 h-full items-center'>
