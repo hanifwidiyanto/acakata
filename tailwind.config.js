@@ -23,6 +23,7 @@ module.exports = {
         'container-leaderboard': "url('/assets/img/container-leaderboard.png')",
         'container-top-leaderboard': "url('/assets/img/container-top-leaderboard.png')",
         'container-bottom-leaderboard': "url('/assets/img/container-bottom-leaderboard.png')",
+        'container-profile-picture': "url('/assets/img/container-bottom-leaderboard.png')",
         'btn-login': "url('/assets/img/btn-login.png')",
         'btn-nologin': "url('/assets/img/btn-nologin.png')",
         'btn-play': "url('/assets/img/btn-play.png')",
