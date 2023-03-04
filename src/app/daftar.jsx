@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/legacy/image'
 
-function Level({ onCloseClick }) {
+function Daftar({ onCloseClick }) {
     const [display, setDisplay] = useState(false)
     const [level, setLevel] = useState(true)
     const [loadingLevel, setLoadingLevel] = useState(false)
@@ -63,4 +63,4 @@ function Level({ onCloseClick }) {
     )
 }
 
-export default Level
+export default Daftar

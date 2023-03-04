@@ -1,4 +1,8 @@
+"use client"
+
 import './globals.css'
+import AuthContext from './Auth'
+import AuthCheck from './AuthCheck'
 
 export default function RootLayout({ children }) {
   return (
@@ -9,9 +13,11 @@ export default function RootLayout({ children }) {
       */}
       <head />
       <body className='w-full flex justify-center'>
-        <main className='sm:w-96 w-full overflow-hidden'>
-          {children}
-        </main> 
+        <AuthContext>
+            <main className='sm:w-96 w-full overflow-hidden'>
+              {children}
+            </main> 
+          </AuthContext>
       </body>
     </html>
   )

@@ -1,10 +1,14 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Level from './level'
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
+import { useSession } from 'next-auth/react'
 
-function Play() {
+
+export default function Play() {
+    const { data: session, status } = useSession({ required: true })
+
     const [displayLevel, setDisplayLevel] = useState(false);
     function handleOpen() {
         setDisplayLevel(true)
@@ -12,11 +16,12 @@ function Play() {
     function handleClose() {
         setDisplayLevel(false)
     }
+
     return (
         <>
             <motion.div
-                initial={{ y: "80%", opacity:0 }}
-                animate={{ y: "0%", opacity:1 }}
+                initial={{ y: "80%", opacity: 0 }}
+                animate={{ y: "0%", opacity: 1 }}
                 className='flex w-full justify-center'>
                 <div className='w-fit'>
                     <div className='bg-playbtn w-44 h-14 bg-center bg-contain bg-no-repeat relative '>
@@ -31,6 +36,5 @@ function Play() {
             )}
         </>
     )
-}
 
-export default Play
+}

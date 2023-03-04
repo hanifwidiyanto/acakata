@@ -1,14 +1,19 @@
-// import Image from 'next/legacy/image'
+"use client"
+
 import Image from 'next/legacy/image'
 import React from 'react'
+import { motion } from 'framer-motion'
 
 export default function Leaderboard() {
   return (
-    <div className='bg-container-leaderboard flex w-full h-[720px] bg-bottom bg-no-repeat bg-contain absolute -bottom-40  '>
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: "0%" }}
+      className='bg-container-leaderboard flex w-full h-[720px] bg-bottom bg-no-repeat bg-contain absolute -bottom-40  '>
       <div className='mx-14 w-full pt-4'>
         <div className="flex flex-col w-full items-center">
-          <span className='font-cubano text-white outline-title text-3xl'>Papan peringkat</span>
-          <span className='font-cubano text-white outline-title text-3xl'>maret 2023</span>
+          <span className='font-cubano text-white outline-title text-2xl'>Papan peringkat</span>
+          <span className='font-cubano text-white outline-title text-2xl'>maret 2023</span>
         </div>
         <div className='mt-8 pt-4 pb-12 flex flex-col gap-5 h-4/6 overflow-scroll no-scrollbar'>
           <div className='bg-container-top-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover'>
@@ -157,6 +162,6 @@ export default function Leaderboard() {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
