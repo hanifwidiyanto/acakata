@@ -4,6 +4,7 @@ import Image from 'next/image'
 import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import Setting from './setting'
+import DevProfile from './DevProfile'
 
 
 function Header(props) {
@@ -13,7 +14,8 @@ function Header(props) {
     const waktuBelajar = timeSpend
     const [playing, setPlaying] = useState(false);
     const [audio] = useState(new Audio("/assets/sound/home.mp3"));
-
+    const [showSetting, setShowSetting] = useState(false)
+    const [showDev, setShowDev] = useState(false)
     const togglePlay = () => {
         if (playing) {
             audio.pause();
@@ -22,9 +24,25 @@ function Header(props) {
         }
         setPlaying(!playing);
     };
+    console.log(showSetting)
+
+    function handleCloseClick() {
+        setShowSetting(false)
+        setShowDev(false)
+    }
     return (
         <>
-            <Setting initValue={props} />
+            {showSetting ?
+                <Setting initValue={props} onCloseClick={handleCloseClick} />
+                :
+                <>
+                </>}
+            {showDev ?
+                <DevProfile onCloseClick={handleCloseClick} />
+                :
+                <>
+                </>}
+
             <div className='flex flex-col gap-4'>
                 <div className='flex justify-between items-center'>
                     <motion.div
@@ -57,13 +75,13 @@ function Header(props) {
                         initial={{ x: "-200%" }}
                         animate={{ x: "0%" }}
                         className='flex gap-2 h-fit'>
-                        <Image src="/assets/img/btn-setting.png" width={34} height={34} priority className="active:scale-90 duration-100 cursor-pointer" alt="btn setting" />
+                        <Image src="/assets/img/btn-setting.png" width={34} height={34} priority className="active:scale-90 duration-100 cursor-pointer" alt="btn setting" onClick={() => setShowSetting(true)} />
                         <Image src={playing ? '/assets/img/btn-sound.png' : '/assets/img/btn-nosound.png'} width={34} height={34} priority className="active:scale-90 duration-100 cursor-pointer" alt="btn sound" onClick={togglePlay} />
                     </motion.div>
                     <motion.div
                         initial={{ x: "200%" }}
                         animate={{ x: "0%" }}
-                        className='bg-profildev bg-right bg-contain bg-no-repeat w-24 h-10 relative active:scale-90 duration-100 cursor-pointer'>
+                        className='bg-profildev bg-right bg-contain bg-no-repeat w-24 h-10 relative active:scale-90 duration-100 cursor-pointer' onClick={() => setShowDev(true)}>
                         <Image src="/assets/img/icon-dev.png" width={20} height={30} className="absolute right-2 -top-4" priority alt="icon dev" />
                         <div className='flex flex-col absolute right-1 top-1'>
                             <span className='outline-dev  font-cubano text-white text-xs'>Profil</span>

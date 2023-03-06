@@ -51,6 +51,7 @@ module.exports = {
         'bggameplay': '#DAF9FE',
         'kuning': '#FDBE3D',
         'biru': '#3771FF',
+        'ping': '#EB6B8E'
         
       },
     },

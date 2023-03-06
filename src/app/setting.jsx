@@ -5,11 +5,10 @@ import { motion } from 'framer-motion'
 import { signOut } from 'next-auth/react'
 import axios from 'axios'
 import Image from 'next/legacy/image'
+import { useRouter } from 'next/navigation'
 
-function Setting({ initValue }) {
-
-
-
+function Setting({ initValue, onCloseClick }) {
+    const router = useRouter()
     const initState = { values: initValue }
     const [formData, setFormData] = useState(initState)
     const [displayForm, setDisplayForm] = useState(true)
@@ -32,29 +31,37 @@ function Setting({ initValue }) {
             "name": formData.values.name,
             "usia": formData.values.usia,
         }
+        setFormData(prev => ({
+            ...prev,
+            values: {
+                ...prev.values,
+                "name": formData.values.name,
+                "usia": formData.values.usia,
+            }
+        }))
         await axios.post('http://localhost:8000/update/user/' + values.email, data)
             .then(res => {
                 console.log(res)
             }).catch(err => {
                 console.log(err)
             })
-        setDisplayForm(false)
-
-        // harusnya pake alert udah berhasil gt, tapi nanti aja dibuat , ribet itu mesti bikin components nya dulu  
+        onCloseClick()
+        router.refresh()
+        // harusnya pake alert udah berhasil gt, tapi nanti aja dibuat , ribet itu mesti bikin components nya dulu
     }
 
 
     return (
         <>
-            <div className={displayForm ? 'fixed h-screen w-screen bg-black z-40 opacity-40' : 'fixed h-screen w-screen bg-black z-40 opacity-40 hidden'}>
+            <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
             </div>
             <motion.div
                 initial={{ opacity: 0, marginTop: '40%' }}
                 animate={{ opacity: 1, marginTop: 0 }}
                 exit={{ opacity: 0 }}
-                className={displayForm ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col px-8 py-4' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat hidden flex-col px-8 py-4'}>
+                className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col px-8 py-4'>
                 <div className='absolute right-7 top-8 cursor-pointer active:scale-90 duration-100'>
-                    <Image src="/assets/img/icon-close.png" alt="" className="" onClick={() => setDisplayForm(false)} width={18} height={18} />
+                    <Image src="/assets/img/icon-close.png" alt="" className="" onClick={onCloseClick} width={18} height={18} />
                 </div>
                 <div className='text-center pt-2'>
                     <span className='text-white font-cubano text-2xl outline-title'>pengaturan</span>
