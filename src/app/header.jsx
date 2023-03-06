@@ -3,9 +3,13 @@
 import Image from 'next/image'
 import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
+import Setting from './setting'
 
 
-function Header({ timeSpend, level, stars }) {
+function Header(props) {
+    const timeSpend = props.timeSpend
+    const level = props.level
+    const stars = props.stars
     const waktuBelajar = timeSpend
     const [playing, setPlaying] = useState(false);
     const [audio] = useState(new Audio("/assets/sound/home.mp3"));
@@ -20,9 +24,7 @@ function Header({ timeSpend, level, stars }) {
     };
     return (
         <>
-            {/* <audio autoPlay loop ref={audioRef}>
-                <source src="/assets/sound/home.mp3" type="audio/mpeg" />
-            </audio> */}
+            <Setting initValue={props} />
             <div className='flex flex-col gap-4'>
                 <div className='flex justify-between items-center'>
                     <motion.div

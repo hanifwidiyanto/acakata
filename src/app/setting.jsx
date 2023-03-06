@@ -2,13 +2,46 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useSession } from 'next-auth/react'
+import { signOut } from 'next-auth/react'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+import Image from 'next/legacy/image'
+
+function Setting({ initValue }) {
 
 
-function Setting({onCloseClick}) {
-    
+
+    const initState = { values: initValue }
+    const [formData, setFormData] = useState(initState)
+    const [displayForm, setDisplayForm] = useState(true)
+
+    const { values } = formData
+
+    const handleChange = ({ target }) => {
+        setFormData(prev => ({
+            ...prev,
+            values: {
+                ...prev.values,
+                [target.id]: target.value
+            }
+        }))
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = {
+            "name": formData.values.name,
+            "usia": formData.values.usia,
+        }
+        await axios.post('http://localhost:8000/update/user/' + values.email, data)
+            .then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
+        setDisplayForm(false)
+
+        // harusnya pake alert udah berhasil gt, tapi nanti aja dibuat , ribet itu mesti bikin components nya dulu  
+    }
 
 
     return (
@@ -19,16 +52,29 @@ function Setting({onCloseClick}) {
                 initial={{ opacity: 0, marginTop: '40%' }}
                 animate={{ opacity: 1, marginTop: 0 }}
                 exit={{ opacity: 0 }}
-                className={displayForm ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col items-center py-4' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat hidden flex-col items-center py-4'}>
+                className={displayForm ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col px-8 py-4' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat hidden flex-col px-8 py-4'}>
+                <div className='absolute right-7 top-8 cursor-pointer active:scale-90 duration-100'>
+                    <Image src="/assets/img/icon-close.png" alt="" className="" onClick={() => setDisplayForm(false)} width={18} height={18} />
+                </div>
                 <div className='text-center pt-2'>
-                    <span className='text-white font-cubano text-2xl outline-title'>Berapa usiamu?</span>
+                    <span className='text-white font-cubano text-2xl outline-title'>pengaturan</span>
                 </div>
-                <div className="flex flex-col-gap-6 justify-center w-full mt-8 text-center">
-                    <h6 className='text-white font-cubano text-md outline-title'>sebelum memulai permainan daftarkan usiamu dulu ya!</h6>
-                </div>
-                <form autoComplete='off' onSubmit={handleSubmit} className="mt-4 flex flex-col items-center">
-                    <input type="number" placeholder='0' id="usia" onChange={handleChange} required value={values.usia} className="border-2 border-biru w-16 appearance-none rounded-md text-center" />
-                    <button type='submit' className='bg-btn-login font-cubano w-[80px] h-[28px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-md mt-3' onClick={() => handleCloseClick()}>submit</button>
+                <form autoComplete='off' className="mt-4 flex flex-col" onSubmit={handleSubmit}>
+                    <div className='flex gap-4 mt-4'>
+
+                        <label className='font-cubano text-white outline-title' htmlFor="Nama">Nama</label>
+                        <input type="text" placeholder={values.name} id="name" className="border-2 border-biru w-36 appearance-none rounded-md text-center" onChange={handleChange} value={values.name} />
+                    </div>
+                    <div className='flex gap-4 mt-8'>
+                        <label className='font-cubano text-white outline-title' htmlFor="Usia">Usia</label>
+                        <input type="number" placeholder={values.usia} id="usia" className="border-2 border-biru w-16 appearance-none rounded-md text-center" onChange={handleChange} value={values.usia} />
+                    </div>
+                    <div className='flex w-full justify-between items-end'>
+                        <button type='submit' className='bg-btn-login font-cubano w-[80px] h-[28px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-md mt-6'>submit</button>
+
+                        <div onClick={() => signOut()} className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm active:scale-90 duration-100 cursor-pointer'>keluar </div>
+
+                    </div>
                 </form>
 
             </motion.div>

@@ -9,24 +9,24 @@ import { useState } from 'react'
 import useSWR from 'swr'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-const fetcher = (email) => fetch('http://localhost:8000/user/' + email).then((res) => res.json());
+import validateEmail from '@/utils/validateEmail'
+// const fetcher = (email) => fetch('http://localhost:8000/user/' + email).then((res) => res.json());
 
 export default function Page() {
 
-
   const { data: session, status } = useSession()
   const email = session?.user?.email
-  const { data, error, mutate } = useSWR(email, fetcher)
+  const data = validateEmail(email)
   console.log(data)
   const router = useRouter()
   const handleRegist = () => {
-      router.refresh()
+    router.refresh()
   }
   return (
     <AuthCheck>
       <div className='bg-home h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>
-        {data?.length === 0 && <Daftar onCloseClick={handleRegist} />}
-        {<Header timeSpend={data?.length ? data[0].timeSpend : "-"} level={data?.length ? data[0].level : "0"} stars={data?.length ? data[0].stars : "0"} />}
+        {!data && <Daftar onCloseClick={handleRegist} />}
+        {data ? <Header timeSpend={data.timeSpend} level={data.level} stars={data.stars} name={data.name} email={data.email} avatar={data.avatar} usia={data.usia} /> : <h1>componen loading</h1>}
         <Play />
         <Footer />
       </div>
