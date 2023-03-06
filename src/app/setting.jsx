@@ -7,66 +7,10 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 
-function Daftar({onCloseClick}) {
-    const { data: session, status } = useSession()
-    const initValue = {
-        "name": "",
-        "email": "",
-        "avatar": "",
-        "usia": 0,
-        "timeSpend": 0,
-        "level": 0,
-        "stars": 0
-    }
-    if (status === 'authenticated') {
-        initValue.name = session.user.name
-        initValue.email = session.user.email
-        initValue.avatar = session.user.image
-    }
-    const initState = { values: initValue }
-    const [formData, setFormData] = useState(initState)
-    const [displayForm, setDisplayForm] = useState(true)
-
-    const { values } = formData
-
-    const handleChange = (e) => {
-        const usia = e.target.value
-        setFormData(prev => ({
-            ...prev,
-            values: {
-                ...prev.values,
-                usia: usia
-            }
-        }))
-    }
+function Setting({onCloseClick}) {
+    
 
 
-    const router = useRouter();
-    const handleCloseClick = () => {
-        onCloseClick()
-        //this will reload the page without doing SSR
-        router.refresh();
-        setDisplayForm(false)
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const data = {
-            "name": formData.values.name,
-            "email": formData.values.email,
-            "avatar": formData.values.avatar,
-            "usia": formData.values.usia,
-            "timeSpend": formData.values.timeSpend,
-            "level": formData.values.level,
-            "stars": formData.values.stars,
-        }
-
-        await axios.post('http://localhost:8000/user/', data)
-            .then(res => {
-                console.log(res)
-            }).catch(err => {
-                console.log(err)
-            })
-    }
     return (
         <>
             <div className={displayForm ? 'fixed h-screen w-screen bg-black z-40 opacity-40' : 'fixed h-screen w-screen bg-black z-40 opacity-40 hidden'}>
@@ -92,4 +36,4 @@ function Daftar({onCloseClick}) {
     )
 }
 
-export default Daftar
+export default Setting

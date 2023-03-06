@@ -19,6 +19,7 @@ export default function Play() {
 
     return (
         <>
+            
             <motion.div
                 initial={{ y: "80%", opacity: 0 }}
                 animate={{ y: "0%", opacity: 1 }}
