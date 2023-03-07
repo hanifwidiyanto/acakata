@@ -27,7 +27,7 @@ export default function Page() {
       <div className='bg-home h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>
         {!data && <Daftar onCloseClick={handleRegist} />}
         {data ? <Header timeSpend={data.timeSpend} level={data.level} stars={data.stars} name={data.name} email={data.email} avatar={data.avatar} usia={data.usia} /> : <h1>componen loading</h1>}
-        <Play />
+        {data ? <Play level={data.level} /> : <h1>component loading</h1>}
         <Footer />
       </div>
     </AuthCheck>

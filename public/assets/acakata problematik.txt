@@ -1,0 +1,12 @@
+-besok bikin kata katanya 
+-inputnya disesuaikan ada audionya jg 
+-untuk durasi lama belajar pake diantar tombol play video dan tombol selesai 
+-terus jg ambil react-youtbe buat ambil durasi dari video nya, jadi tombolnya baru bisa di klik ketika memenuhi waktu durasinya dan dia baru pertama kali di level tersebut 
+-untuk ngambil game mode nya cek dari stars nya, misal jika stars nya baru 5 berarti dia yang level 2 tapi hard 
+-validasi jg ketika game tuh apakah dia menang atau ga, jika dia benar kurang dari 50% dia gagal,  
+-pas game dibikin durasinya, jika udah melewati batas waktu dia langsung ke calculate hasilnya, 
+-jika gagal hasilnya stars nya ga di post ke db, 
+-tapi jika dia menang ada tulisan kek 'selamat kamu mendapatkan 2 bintang di level 2' artinya u harus ngambil recent level nya dan bintang nya. 
+-ketika klik lanjutkan dia masuk ke home lagi
+
+

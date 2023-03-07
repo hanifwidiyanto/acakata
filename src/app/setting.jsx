@@ -11,7 +11,6 @@ function Setting({ initValue, onCloseClick }) {
     const router = useRouter()
     const initState = { values: initValue }
     const [formData, setFormData] = useState(initState)
-    const [displayForm, setDisplayForm] = useState(true)
 
     const { values } = formData
 

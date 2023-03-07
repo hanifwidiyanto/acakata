@@ -4,20 +4,39 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/legacy/image'
 
-function Level({ onCloseClick }) {
-    const [display, setDisplay] = useState(false)
-    const [level, setLevel] = useState(true)
+function Level({ onCloseClick, level }) {
+
     const [loadingLevel, setLoadingLevel] = useState(false)
+    const [slideLevel, setSlideLevel] = useState(true)
+    const slideLevelFirst = []
+    const slideLevelSecond = []
+    for (let i = 1; i <= 4; i++) {
+        if (i <= level) {
+            slideLevelFirst.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'>
+                <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
+            </motion.div>)
+        } else {
+            slideLevelFirst.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
+        }
+    }
+    for (let i = 5; i <= 8; i++) {
+        if (i <= level) {
+            slideLevelSecond.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'>
+                <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
+            </motion.div>)
+        } else {
+            slideLevelSecond.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
+        }
+    }
 
     const changeLevel = (bool) => {
-        if (bool !== level) {
+        if (bool !== slideLevel) {
             setLoadingLevel(true)
             setTimeout(() => {
                 setLoadingLevel(false)
-                setLevel(bool)
+                setSlideLevel(bool)
             }, 200);
         } else {
-            console.log('Oktober')
             navigator.vibrate(225);
         }
     }
@@ -26,9 +45,9 @@ function Level({ onCloseClick }) {
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
             </div>
             <motion.div
-             initial={{ opacity: 0, marginTop:'40%' }}
-             animate={{ opacity: 1, marginTop:0 }}
-             exit={{ opacity: 0 }}
+                initial={{ opacity: 0, marginTop: '40%' }}
+                animate={{ opacity: 1, marginTop: 0 }}
+                exit={{ opacity: 0 }}
                 className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-listlevel w-[300px] h-[370px] bg-center bg-contain bg-no-repeat flex flex-col justify-between items-center py-5'>
                 <div className='absolute right-8 top-8 cursor-pointer active:scale-90 duration-100'>
                     <Image src="/assets/img/icon-close.png" alt="" className="" onClick={onCloseClick} width={24} height={24} />
@@ -36,22 +55,14 @@ function Level({ onCloseClick }) {
                 <div className='text-center pt-2'>
                     <span className='text-white font-cubano text-3xl outline-title'>level</span>
                 </div>
-                {level ?
+                {slideLevel ?
                     <div
                         className='grid grid-cols-2 grid-rows-2 gap-6 -mt-4'>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'>
-                            <span className='text-white outline-title text-2xl font-cubano'>1</span>
-                        </motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
+                        {slideLevelFirst}
                     </div>
                     :
                     <div className='grid grid-cols-2 grid-rows-2 gap-6 -mt-4'>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
-                        <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>
+                        {slideLevelSecond}
                     </div>
                 }
                 <div className='flex relative -top-6 gap-4'>

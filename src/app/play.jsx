@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 import { useSession } from 'next-auth/react'
 
 
-export default function Play() {
+export default function Play({ level }) {
     const { data: session, status } = useSession({ required: true })
 
     const [displayLevel, setDisplayLevel] = useState(false);
@@ -19,7 +19,7 @@ export default function Play() {
 
     return (
         <>
-            
+
             <motion.div
                 initial={{ y: "80%", opacity: 0 }}
                 animate={{ y: "0%", opacity: 1 }}
@@ -33,7 +33,7 @@ export default function Play() {
                 </div>
             </motion.div>
             {displayLevel && (
-                <Level onCloseClick={handleClose} />
+                <Level onCloseClick={handleClose} level={level} />
             )}
         </>
     )

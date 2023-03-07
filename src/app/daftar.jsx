@@ -15,7 +15,7 @@ function Daftar({onCloseClick}) {
         "avatar": "",
         "usia": 0,
         "timeSpend": 0,
-        "level": 0,
+        "level": 1,
         "stars": 0
     }
     if (status === 'authenticated') {
