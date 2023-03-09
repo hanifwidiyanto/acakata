@@ -33,6 +33,7 @@ module.exports = {
         'btn-left': "url('/assets/img/btn-left.png')",
         'btn-right': "url('/assets/img/btn-right.png')",
         'btn-done': "url('/assets/img/btn-done.png')",
+        'btn-videolock': "url('/assets/img/btn-videolock.png')",
         'errorsign': "url('/assets/img/bg-error.png')",
         'effect-finish-top': "url('/assets/img/effect-finish-top.png')",
         'effect-finish-bottom': "url('/assets/img/effect-finish-bottom.png')",

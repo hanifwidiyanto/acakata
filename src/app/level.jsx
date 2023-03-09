@@ -1,31 +1,107 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/legacy/image'
+import getUsersByID from '@/utils/getUsersById'
+import Link from 'next/link'
 
-function Level({ onCloseClick, level }) {
+function Level({ onCloseClick, level, uuid }) {
+    const dataUser = getUsersByID(uuid)
+    const initValue = {
+        "name": "",
+        "email": "",
+        "avatar": "",
+        "usia": 0,
+        "timeSpend": 0,
+        "level": 1,
+        "star": [{
+            "id": "",
+            "level": 1,
+            "star": 0
+        }]
+    }
+    const [userData, setUserData] = useState(initValue)
+    useEffect(() => {
+        if (dataUser) {
+            setUserData(dataUser)
+            console.log('ok data user ke set')
+        }
+        console.log(dataUser)
+        console.log(userData)
+    }, [dataUser])
 
     const [loadingLevel, setLoadingLevel] = useState(false)
     const [slideLevel, setSlideLevel] = useState(true)
     const slideLevelFirst = []
     const slideLevelSecond = []
+
+    function ContentStar({ i }) {
+        if (i.stars == 0) {
+            return (
+                <>
+                    <Image src="/assets/img/icon-star-empty.png" width={24} height={24} priority />
+                    <Image src="/assets/img/icon-star-empty.png" width={32} height={32} priority />
+                    <Image src="/assets/img/icon-star-empty.png" width={24} height={24} priority />
+                </>
+            )
+        }
+        if (i.stars == 1) {
+            return (
+                <>
+                    <Image src="/assets/img/icon-star.png" width={24} height={24} priority />
+                    <Image src="/assets/img/icon-star-empty.png" width={32} height={32} priority />
+                    <Image src="/assets/img/icon-star-empty.png" width={24} height={24} priority />
+                </>
+            )
+        }
+        if (i.stars == 2) {
+            return (
+                <>
+                    <Image src="/assets/img/icon-star.png" width={24} height={24} priority />
+                    <Image src="/assets/img/icon-star.png" width={32} height={32} priority />
+                    <Image src="/assets/img/icon-star-empty.png" width={24} height={24} priority />
+                </>
+            )
+        }
+        if (i.stars == 3) {
+            return (
+                <>
+                    <Image src="/assets/img/icon-star.png" width={24} height={24} priority />
+                    <Image src="/assets/img/icon-star.png" width={32} height={32} priority />
+                    <Image src="/assets/img/icon-star.png" width={24} height={24} priority />
+                </>
+            )
+        }
+    }
     for (let i = 1; i <= 4; i++) {
-        if (i <= level) {
-            slideLevelFirst.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'>
-                <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
-            </motion.div>)
+        if (i <= userData.level) {
+            slideLevelFirst.push(
+                <Link href={`level/${i}`} key={i}>
+                    <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center relative'>
+                        <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
+                        <div className='flex absolute -bottom-3 -mx-2 justify-between'>
+                            <ContentStar i={userData.star[i - 1]} />
+                        </div>
+                    </motion.div>
+                </Link>
+            )
         } else {
-            slideLevelFirst.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
+            slideLevelFirst.push(<motion.div key={i} animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
         }
     }
     for (let i = 5; i <= 8; i++) {
         if (i <= level) {
-            slideLevelSecond.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'>
-                <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
-            </motion.div>)
+            slideLevelSecond.push(<Link href={`level/${i}`} key={i}>
+                <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center relative'>
+                    <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
+                    <div className='flex absolute -bottom-3 -mx-2 justify-between'>
+                        <ContentStar i={userData.star[i - 1]} />
+                    </div>
+                </motion.div>
+            </Link>)
         } else {
-            slideLevelSecond.push(<motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
+            slideLevelSecond.push(<motion.div key={i} animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-lock bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center'></motion.div>)
         }
     }
 

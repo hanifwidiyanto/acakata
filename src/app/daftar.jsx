@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 
 
-function Daftar({onCloseClick}) {
+function Daftar({ onCloseClick }) {
     const { data: session, status } = useSession()
     const initValue = {
         "name": "",
@@ -15,8 +15,7 @@ function Daftar({onCloseClick}) {
         "avatar": "",
         "usia": 0,
         "timeSpend": 0,
-        "level": 1,
-        "stars": 0
+        "level": 1
     }
     if (status === 'authenticated') {
         initValue.name = session.user.name
@@ -25,7 +24,6 @@ function Daftar({onCloseClick}) {
     }
     const initState = { values: initValue }
     const [formData, setFormData] = useState(initState)
-    const [displayForm, setDisplayForm] = useState(true)
 
     const { values } = formData
 
@@ -41,13 +39,7 @@ function Daftar({onCloseClick}) {
     }
 
 
-    const router = useRouter();
-    const handleCloseClick = () => {
-        onCloseClick()
-        //this will reload the page without doing SSR
-        router.refresh();
-        setDisplayForm(false)
-    }
+   
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = {
@@ -56,8 +48,7 @@ function Daftar({onCloseClick}) {
             "avatar": formData.values.avatar,
             "usia": formData.values.usia,
             "timeSpend": formData.values.timeSpend,
-            "level": formData.values.level,
-            "stars": formData.values.stars,
+            "level": formData.values.level
         }
 
         await axios.post('http://localhost:8000/user/', data)
@@ -66,16 +57,18 @@ function Daftar({onCloseClick}) {
             }).catch(err => {
                 console.log(err)
             })
+            onCloseClick
     }
+    console.log(values)
     return (
         <>
-            <div className={displayForm ? 'fixed h-screen w-screen bg-black z-40 opacity-40' : 'fixed h-screen w-screen bg-black z-40 opacity-40 hidden'}>
+            <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
             </div>
             <motion.div
                 initial={{ opacity: 0, marginTop: '40%' }}
                 animate={{ opacity: 1, marginTop: 0 }}
                 exit={{ opacity: 0 }}
-                className={displayForm ? 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col items-center py-4' : 'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat hidden flex-col items-center py-4'}>
+                className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-container-login w-72 h-64 bg-center bg-contain bg-no-repeat flex flex-col items-center py-4'>
                 <div className='text-center pt-2'>
                     <span className='text-white font-cubano text-2xl outline-title'>Berapa usiamu?</span>
                 </div>
@@ -84,7 +77,7 @@ function Daftar({onCloseClick}) {
                 </div>
                 <form autoComplete='off' onSubmit={handleSubmit} className="mt-4 flex flex-col items-center">
                     <input type="number" placeholder='0' id="usia" onChange={handleChange} required value={values.usia} className="border-2 border-biru w-16 appearance-none rounded-md text-center" />
-                    <button type='submit' className='bg-btn-login font-cubano w-[80px] h-[28px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-md mt-3' onClick={() => handleCloseClick()}>submit</button>
+                    <button type='submit' className='bg-btn-login font-cubano w-[80px] h-[28px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-md mt-3' onClick={onCloseClick}>submit</button>
                 </form>
 
             </motion.div>

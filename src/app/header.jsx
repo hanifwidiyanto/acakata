@@ -11,7 +11,22 @@ function Header(props) {
     const timeSpend = props.timeSpend
     const level = props.level
     const stars = props.stars
-    const waktuBelajar = timeSpend
+    const konversiWaktu = (ms) => {
+        let detik = Math.floor(ms / 1000);
+        let menit = Math.floor(detik / 60);
+        detik = detik % 60;
+        let jam = Math.floor(menit / 60);
+        menit = menit % 60;
+
+        if (jam === 0) {
+            return `${menit} menit, ${detik} detik`;
+        } else {
+            return `${jam}j, ${menit}m, ${detik}d`;
+        }
+    }
+    const waktuBelajar = konversiWaktu(timeSpend)
+    // const waktuBelajar = `${minutes}m, ${(seconds < 10 ? "0" : "")}${seconds}d`;
+
     const [playing, setPlaying] = useState(false);
     const [audio] = useState(new Audio("/assets/sound/home.mp3"));
     const [showSetting, setShowSetting] = useState(false)
@@ -24,7 +39,6 @@ function Header(props) {
         }
         setPlaying(!playing);
     };
-    console.log(showSetting)
 
     function handleCloseClick() {
         setShowSetting(false)
@@ -32,16 +46,8 @@ function Header(props) {
     }
     return (
         <>
-            {showSetting ?
-                <Setting initValue={props} onCloseClick={handleCloseClick} />
-                :
-                <>
-                </>}
-            {showDev ?
-                <DevProfile onCloseClick={handleCloseClick} />
-                :
-                <>
-                </>}
+            {showSetting && <Setting initValue={props} onCloseClick={handleCloseClick} />}
+            {showDev && <DevProfile onCloseClick={handleCloseClick} />}
 
             <div className='flex flex-col gap-4'>
                 <div className='flex justify-between items-center'>
@@ -54,7 +60,7 @@ function Header(props) {
                             <span className='font-cubano italic text-sm text-kuning shadow-inner outline-title'>lama belajar</span>
                         </div>
                         <Image src="/assets/img/icon-time.png" width={20} height={24} priority className="relative left-7" alt="icon time" />
-                        <span className='font-cubano text-white outline-title relative left-10'>{waktuBelajar}</span>
+                        <span className='font-cubano text-white text-sm outline-title relative left-10'>{waktuBelajar}</span>
                     </motion.div>
                     <motion.div
                         initial={{ x: "200%" }}

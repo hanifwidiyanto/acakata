@@ -38,7 +38,7 @@ function Setting({ initValue, onCloseClick }) {
                 "usia": formData.values.usia,
             }
         }))
-        await axios.post('http://localhost:8000/update/user/' + values.email, data)
+        await axios.post('http://localhost:8000/update/user/' + values.uuid, data)
             .then(res => {
                 console.log(res)
             }).catch(err => {
