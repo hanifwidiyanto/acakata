@@ -77,7 +77,7 @@ function Level({ onCloseClick, level, uuid }) {
     for (let i = 1; i <= 4; i++) {
         if (i <= userData.level) {
             slideLevelFirst.push(
-                <Link href={`level/${i}`} key={i}>
+                <Link href={`belajar/${i}`} key={i}>
                     <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center relative'>
                         <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
                         <div className='flex absolute -bottom-3 -mx-2 justify-between'>
@@ -92,7 +92,7 @@ function Level({ onCloseClick, level, uuid }) {
     }
     for (let i = 5; i <= 8; i++) {
         if (i <= level) {
-            slideLevelSecond.push(<Link href={`level/${i}`} key={i}>
+            slideLevelSecond.push(<Link href={`belajar/${i}`} key={i}>
                 <motion.div animate={{ scale: loadingLevel ? 0 : 1 }} className='bg-btn-level bg-center bg-contain bg-no-repeat h-16 w-16 grid place-content-center relative'>
                     <span className='text-white outline-title text-2xl font-cubano'>{i}</span>
                     <div className='flex absolute -bottom-3 -mx-2 justify-between'>

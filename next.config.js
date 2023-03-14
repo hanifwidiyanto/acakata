@@ -14,6 +14,12 @@ const nextConfig = {
       port: '',
       pathname: '/vi/*/*',
     }, ],
+    remotePatterns: [{
+      protocol: 'http',
+      hostname: 'localhost',
+      port: '8000',
+      pathname: '/assets/*/*',
+    }, ],
   },
 
 }

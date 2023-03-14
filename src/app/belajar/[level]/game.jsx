@@ -8,9 +8,16 @@ import { useSession } from 'next-auth/react'
 import validateEmail from '@/utils/validateEmail'
 import axios from 'axios'
 import Footer from './footer'
+import getMateriByLevel from '@/utils/getMateri'
+import Mode from './mode'
+import getUsersByID from '@/utils/getUsersById'
 
-function Game() {
-    const tempDurasi = getDuration('MSvC6pzW-3I')
+function Game({ level }) {
+    const materi = getMateriByLevel(level)
+    const thumb = (materi ? materi.thumb : 'https://i.ytimg.com/vi/kV_SDN9QYM0/hqdefault.jpg')
+    const video = materi?.video
+
+    const tempDurasi = getDuration('kV_SDN9QYM0')
     const [doneButton, setDoneButton] = useState(true)
     const [timePlay, setTimePlay] = useState(null)
     const [timeStop, setTimeStop] = useState(null)
@@ -18,9 +25,11 @@ function Game() {
     const { data: session } = useSession()
     const email = session?.user?.email
     const dataUser = validateEmail(email)
-    const uuid = (dataUser ? dataUser.uuid : '')
-    function filterDurasi(d) {
+    const uuid = dataUser?.uuid
+    const detailUser = getUsersByID(uuid)
+    const starThisLevel = detailUser?.star[level - 1].stars
 
+    function filterDurasi(d) {
         const a = d.split('PT')[1]
         const menit = parseInt(a.split('M')[0])
         const b = a.split('M')[1]
@@ -34,11 +43,14 @@ function Game() {
         setDoneButton(false)
         setTimePlay(Date.now())
         setRunning(true);
-        const durasiConvert = (durasi[0] * 60 + durasi[1]) * 500
-        console.log(durasiConvert)
-        setTimeout(() => {
-            setDoneButton(true)
-        }, durasiConvert);
+        console.log(durasi)
+        if (durasi) {
+            const durasiConvert = (durasi[0] * 60 + durasi[1]) * 500
+            console.log(durasiConvert)
+            setTimeout(() => {
+                setDoneButton(true)
+            }, durasiConvert);
+        }
     }
     const updateTimeSpend = async (data) => {
         await axios.post('http://localhost:8000/update/timeSpend/' + uuid, data)
@@ -73,10 +85,13 @@ function Game() {
     const menit = Math.floor(time / 60);
     const detik = Math.round(time % 60);
 
-    const videoId = "MSvC6pzW-3I";
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    function handleClick() {
+
+    }
+
     return (
         <>
+            <Mode onCloseClick={handleClick} star={starThisLevel} />
             <div className="flex w-full justify-center flex-col items-center">
                 <div className="bg-container-gameplay w-[321px] h-[84px] bg-no-repeat bg-center bg-contain flex justify-center items-center relative text-center flex-col">
                     <div className='font-cubano text-2xl outline-title text-white flex flex-col gap-0 relative -top-2'>
@@ -87,7 +102,7 @@ function Game() {
                 <div className='w-80 h-60 bg-bggameplay border-2 border-blue-900 rounded-lg mt-8 shadow-lg relative'>
                     {isPlay ?
                         <>
-                            <Image src="https://i.ytimg.com/vi/MSvC6pzW-3I/hqdefault.jpg" width={320} height={240} className="relative blur" priority />
+                            <Image src={thumb} width={320} height={240} className="relative blur" priority />
                             <FaPlay className="absolute transform top-1/2 left-1/2 text-white text-6xl -translate-x-1/2 -translate-y-1/2 cursor-pointer active:scale-90 duration-100" onClick={() => onPlayClick()} />
                         </>
                         :
@@ -95,7 +110,7 @@ function Game() {
                             title="Youtube Embed"
                             width="100%"
                             height="100%"
-                            src={embedUrl}
+                            src={`${video}?autoplay=1`}
                             frameBorder="0"
                             allow="autoplay; encrypted-media"
                             allowFullScreen

@@ -5,11 +5,10 @@ import Gameplay from './gameplay'
 import Header from './header'
 
 function page({ params }) {
-  console.log(params)
   return (
     <div className='bg-gameplay h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>
       <Header level={params.level} />
-      <Game />
+      <Game level={params.level}/>
     </div>
   )
 }
