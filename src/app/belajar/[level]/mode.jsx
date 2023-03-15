@@ -91,7 +91,7 @@ function Mode({ onCloseClick, star }) {
             )
         }
     }
-
+    console.log(star)
     return (
         <>
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
@@ -105,7 +105,7 @@ function Mode({ onCloseClick, star }) {
                     <Image src="/assets/img/icon-close.png" alt="" className="" onClick={onCloseClick} width={24} height={24} />
                 </div>
                 <div className='text-center pt-2 pb-4'>
-                    <span className='text-white font-cubano text-3xl outline-title'>level</span>
+                    <span className='text-white font-cubano text-3xl outline-title'>PILIH MODE</span>
                 </div>
                 <RenderMode star={star} />
             </motion.div>

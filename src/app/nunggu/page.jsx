@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import classNames from "classnames";
 
-function Loading() {
+function page() {
     const [boxes, setBoxes] = useState(["a", "b", "c", "d"]);
     const [dots, setDots] = useState('');
 
@@ -36,7 +36,7 @@ function Loading() {
     }, [dots]);
 
     return (
-        <div className="h-screen flex flex-col justify-center items-center">
+        <div className="h-screen flex flex-col justify-center items-center bg-login">
             <div className="grid grid-cols-2 grid-rows-2 gap-4 font-cubano outline-title">
                 {boxes.map((box, index) => (
                     <div
@@ -59,4 +59,4 @@ function Loading() {
     );
 }
 
-export default Loading
+export default page

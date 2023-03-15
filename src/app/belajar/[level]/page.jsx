@@ -1,7 +1,5 @@
 import React from 'react'
-import Footer from './footer'
 import Game from './game'
-import Gameplay from './gameplay'
 import Header from './header'
 
 function page({ params }) {

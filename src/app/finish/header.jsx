@@ -1,7 +1,30 @@
-import Image from 'next/legacy/image'
-import React from 'react'
+"use client"
 
-function Header({params}) {
+import Image from 'next/legacy/image'
+import React, { useEffect, useState } from 'react'
+
+function Header({ level, totalTrue, totalTask }) {
+    const [isLolos, setIsLolos] = useState(false)
+
+    useEffect(() => {
+        if (totalTrue / totalTask * 100 > 50) {
+            setIsLolos(true)
+        }
+    }, [])
+
+    function CheckLolos() {
+        if (isLolos) {
+            return (
+                <div className='flex w-full justify-center'>
+                    <span className='text-white outline-title text-center w-8/12 text-xl font-cubano'>Yey, kamu berhasil!<br />kamu dapat melanjutkan ke level selanjutnya</span>
+                </div>
+            )
+        } else {
+            <div className='flex w-full justify-center'>
+                <span className='text-white outline-title text-center w-8/12 text-xl font-cubano'>Yah, kamu gagal!<br />kamu dapat melanjutkan ke level selanjutnya</span>
+            </div>
+        }
+    }
     return (
         <div className="flex flex-col gap-6">
             <div className="flex w-full justify-center gap-2 px-4 pt-6">
@@ -11,11 +34,9 @@ function Header({params}) {
                 </div>
             </div>
             <div className='flex w-full justify-center italic'>
-                <h4 className='text-kuning font-cubano outline-title text-2xl'>Level 1 Selesai</h4>
+                <h4 className='text-kuning font-cubano outline-title text-2xl'>Level {level} Selesai</h4>
             </div>
-            <div className='flex w-full justify-center'>
-              <span className='text-white outline-title text-center w-8/12 text-xl font-cubano'>kamu hebat!<br />kamu dapat melanjutkan ke level selanjutnya</span>
-            </div>
+            <CheckLolos />
         </div>
     )
 }

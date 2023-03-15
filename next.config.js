@@ -9,17 +9,19 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [{
-      protocol: 'https',
-      hostname: 'i.ytimg.com',
-      port: '',
-      pathname: '/vi/*/*',
-    }, ],
-    remotePatterns: [{
-      protocol: 'http',
-      hostname: 'localhost',
-      port: '8000',
-      pathname: '/assets/*/*',
-    }, ],
+        protocol: 'https',
+        hostname: 'i.ytimg.com',
+        port: '',
+        pathname: '/vi/*/*',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8000',
+        pathname: '/assets/*/*',
+      }
+    ],
+ 
   },
 
 }

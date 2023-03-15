@@ -14,29 +14,34 @@ import getUsersByID from '@/utils/getUsersById'
 
 function Game({ level }) {
     const materi = getMateriByLevel(level)
-    const thumb = (materi ? materi.thumb : 'https://i.ytimg.com/vi/kV_SDN9QYM0/hqdefault.jpg')
-    const video = materi?.video
-
-    const tempDurasi = getDuration('kV_SDN9QYM0')
-    const [doneButton, setDoneButton] = useState(true)
-    const [timePlay, setTimePlay] = useState(null)
-    const [timeStop, setTimeStop] = useState(null)
-    const [isPlay, setIsPlay] = useState(true)
-    const { data: session } = useSession()
-    const email = session?.user?.email
-    const dataUser = validateEmail(email)
-    const uuid = dataUser?.uuid
-    const detailUser = getUsersByID(uuid)
-    const starThisLevel = detailUser?.star[level - 1].stars
+    const [thumb, setThumb] = useState('https://i.ytimg.com/vi/kV_SDN9QYM0/hqdefault.jpg')
+    const [video, setVideo] = useState('https://www.youtube.com/embed/R0caSJYTXiw')
+    const [idVideo, setIdVideo] = useState('kV_SDN9QYM0')
+    const tempDurasi = getDuration(idVideo)
+    const [durasi, setDurasi] = useState([4, 32])
 
     function filterDurasi(d) {
+
         const a = d.split('PT')[1]
         const menit = parseInt(a.split('M')[0])
         const b = a.split('M')[1]
         const detik = parseInt(b.split('S')[0])
         return [menit, detik]
     }
-    const durasi = (tempDurasi ? filterDurasi(tempDurasi.items[0].contentDetails.duration) : 'd')
+
+    const [doneButton, setDoneButton] = useState(true)
+    const [timePlay, setTimePlay] = useState(null)
+    const [timeStop, setTimeStop] = useState(null)
+    const [isPlay, setIsPlay] = useState(true)
+
+    const { data: session } = useSession()
+    const email = session?.user?.email
+    const dataUser = validateEmail(email)
+    const uuid = dataUser?.uuid
+    const detailUser = getUsersByID(uuid)
+    const starThisLevel = detailUser?.star[level - 1]?.stars
+
+    const [timeSent, setTimeSent] = useState(false)
 
     function onPlayClick() {
         setIsPlay(false)
@@ -52,18 +57,31 @@ function Game({ level }) {
             }, durasiConvert);
         }
     }
+
     const updateTimeSpend = async (data) => {
         await axios.post('http://localhost:8000/update/timeSpend/' + uuid, data)
             .then(res => {
                 console.log(res)
+                setTimeSent(true)
             }).catch(err => {
                 console.log(err)
             })
     }
 
     const [time, setTime] = useState(0);
-    const [running, setRunning] = useState(false);
+    const [running, setRunning] = useState(false)
+
     useEffect(() => {
+
+        if (materi) {
+            setThumb(materi.thumb)
+            setVideo(materi?.video + '?autoplay=1')
+            const getIdVideo = materi?.thumb?.split('/')[4]
+            setIdVideo(getIdVideo)
+        }
+        if (tempDurasi) {
+            setDurasi(filterDurasi(tempDurasi.items[0].contentDetails.duration))
+        }
         if (timePlay & timeStop) {
             const timeSpend = timeStop - timePlay
             const prevTimeSpend = dataUser?.timeSpend
@@ -80,18 +98,24 @@ function Game({ level }) {
         return () => clearInterval(intervalId);
 
 
-    }, [timeStop, running])
+    }, [timeStop, running, materi, tempDurasi])
 
     const menit = Math.floor(time / 60);
     const detik = Math.round(time % 60);
 
-    function handleClick() {
-
+    const [displayMode, setDisplayMode] = useState(false)
+    function handleCompleteLearning() {
+        setDisplayMode(true)
+        if (!timeSent) setTimeStop(Date.now())
+    }
+    function handleClose() {
+        setDisplayMode(false)
+        console.log('ok')
     }
 
     return (
         <>
-            <Mode onCloseClick={handleClick} star={starThisLevel} />
+            {displayMode && <Mode onCloseClick={handleClose} star={starThisLevel} />}
             <div className="flex w-full justify-center flex-col items-center">
                 <div className="bg-container-gameplay w-[321px] h-[84px] bg-no-repeat bg-center bg-contain flex justify-center items-center relative text-center flex-col">
                     <div className='font-cubano text-2xl outline-title text-white flex flex-col gap-0 relative -top-2'>
@@ -110,7 +134,7 @@ function Game({ level }) {
                             title="Youtube Embed"
                             width="100%"
                             height="100%"
-                            src={`${video}?autoplay=1`}
+                            src={video}
                             frameBorder="0"
                             allow="autoplay; encrypted-media"
                             allowFullScreen
@@ -118,10 +142,10 @@ function Game({ level }) {
                     }
                 </div>
                 {doneButton ?
-                    <div className='flex justify-center w-full mt-12 active:scale-90 duration-100 cursor-pointer' onClick={() => setTimeStop(Date.now())}>
+                    <div className='flex justify-center w-full mt-12 active:scale-90 duration-100 cursor-pointer' onClick={() => handleCompleteLearning()}>
                         <div className='w-fit'>
                             <button type='submit' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
-                                <Image src="/assets/img/icon-done.png" alt="icondone" width={24} height={24} />
+                                <Image src="/assets/img/icon-done.png" alt="icondone" width={24} height={24} priority />
                                 <span className='text-xl'>selesai</span>
                             </button>
                         </div>

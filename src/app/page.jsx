@@ -6,11 +6,9 @@ import Play from './play'
 import AuthCheck from './AuthCheck'
 import Daftar from './daftar'
 import { useState } from 'react'
-import useSWR from 'swr'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import validateEmail from '@/utils/validateEmail'
-// const fetcher = (email) => fetch('http://localhost:8000/user/' + email).then((res) => res.json());
 
 export default function Page() {
   const router = useRouter()
