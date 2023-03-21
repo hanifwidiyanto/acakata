@@ -17,17 +17,17 @@ function Game({ level }) {
     const [thumb, setThumb] = useState('https://i.ytimg.com/vi/kV_SDN9QYM0/hqdefault.jpg')
     const [video, setVideo] = useState('https://www.youtube.com/embed/R0caSJYTXiw')
     const [idVideo, setIdVideo] = useState('kV_SDN9QYM0')
-    const tempDurasi = getDuration(idVideo)
+    // const tempDurasi = getDuration(idVideo)
     const [durasi, setDurasi] = useState([4, 32])
 
-    function filterDurasi(d) {
+    // function filterDurasi(d) {
 
-        const a = d.split('PT')[1]
-        const menit = parseInt(a.split('M')[0])
-        const b = a.split('M')[1]
-        const detik = parseInt(b.split('S')[0])
-        return [menit, detik]
-    }
+    //     const a = d.split('PT')[1]
+    //     const menit = parseInt(a.split('M')[0])
+    //     const b = a.split('M')[1]
+    //     const detik = parseInt(b.split('S')[0])
+    //     return [menit, detik]
+    // }
 
     const [doneButton, setDoneButton] = useState(true)
     const [timePlay, setTimePlay] = useState(null)
@@ -79,9 +79,10 @@ function Game({ level }) {
             const getIdVideo = materi?.thumb?.split('/')[4]
             setIdVideo(getIdVideo)
         }
-        if (tempDurasi) {
-            setDurasi(filterDurasi(tempDurasi.items[0].contentDetails.duration))
-        }
+        // console.log(tempDurasi)
+        // if (tempDurasi) {
+        //     setDurasi(filterDurasi(tempDurasi.items[0].contentDetails.duration))
+        // }
         if (timePlay & timeStop) {
             const timeSpend = timeStop - timePlay
             const prevTimeSpend = dataUser?.timeSpend
@@ -98,7 +99,7 @@ function Game({ level }) {
         return () => clearInterval(intervalId);
 
 
-    }, [timeStop, running, materi, tempDurasi])
+    }, [timeStop, running, materi])
 
     const menit = Math.floor(time / 60);
     const detik = Math.round(time % 60);
@@ -115,7 +116,7 @@ function Game({ level }) {
 
     return (
         <>
-            {displayMode && <Mode onCloseClick={handleClose} star={starThisLevel} />}
+            {displayMode && <Mode onCloseClick={handleClose} star={starThisLevel} level={level} />}
             <div className="flex w-full justify-center flex-col items-center">
                 <div className="bg-container-gameplay w-[321px] h-[84px] bg-no-repeat bg-center bg-contain flex justify-center items-center relative text-center flex-col">
                     <div className='font-cubano text-2xl outline-title text-white flex flex-col gap-0 relative -top-2'>

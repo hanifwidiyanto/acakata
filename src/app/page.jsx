@@ -5,10 +5,11 @@ import Header from './header'
 import Play from './play'
 import AuthCheck from './AuthCheck'
 import Daftar from './daftar'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import validateEmail from '@/utils/validateEmail'
+import Loading from './loading'
 
 export default function Page() {
   const router = useRouter()
@@ -17,6 +18,10 @@ export default function Page() {
   const email = session?.user?.email
   const data = validateEmail(email)
   console.log(data)
+  const [dataUser, setDataUser] = useState(false)
+  useEffect(() => {
+    if (data) setDataUser(data)
+  }, [data])
   const currUrl = usePathname()
   console.log(currUrl)
   function handleRegist() {
@@ -25,7 +30,9 @@ export default function Page() {
     setDisplayForm(false)
   }
 
-  //rapihin routenya woy
+  // if(!data){
+  //   return <Loading />
+  // }
   return (
     <AuthCheck>
       <div className='bg-home h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between'>

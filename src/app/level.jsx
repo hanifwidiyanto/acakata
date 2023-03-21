@@ -8,6 +8,7 @@ import Link from 'next/link'
 
 function Level({ onCloseClick, level, uuid }) {
     const dataUser = getUsersByID(uuid)
+    console.log(dataUser)
     const initValue = {
         "name": "",
         "email": "",

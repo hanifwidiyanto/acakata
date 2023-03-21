@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/navigation'
 import Footer from './footer'
@@ -10,7 +10,9 @@ function Game({ taskGame, uuid, level, mode }) {
     const router = useRouter()
 
     const [isCountdownActive, setIsCountdownActive] = useState(0)
-
+    useEffect(() => {
+        if (taskGame) setGame(taskGame[0])
+    }, [taskGame])
     const [currentIndex, setCurrentIndex] = useState(0);
     const [game, setGame] = useState(taskGame[currentIndex])
     const [answer, setAnswer] = useState('')
@@ -18,9 +20,6 @@ function Game({ taskGame, uuid, level, mode }) {
     const [gameDone, setGameDone] = useState(false)
     const [isCount, setIsCount] = useState(false)
     const [key, setKey] = useState(0); // state tambahan
-    const [taskWord, setTaskWord] = useState('')
-    const [fileGame, setFileGame] = useState('')
-
     const typeAnswer = (e) => {
         if (answer.length < game?.word?.length) {
             setAnswer(answer + e)
@@ -37,7 +36,6 @@ function Game({ taskGame, uuid, level, mode }) {
                     setKey(c + 1);
                 }
                 setAnswer('')
-                setDisabledButton([])
                 const nextIndex = (currentIndex + 1) % taskGame.length;
                 setCurrentIndex(nextIndex);
                 if (nextIndex === 0) {
@@ -46,50 +44,16 @@ function Game({ taskGame, uuid, level, mode }) {
                     router.push(`/finish?true=${countTrue}&task=${taskGame.length}&uuid=${uuid}&level=${level}&mode=${mode}&time=${timeSpend}`)
                 }
                 setGame(taskGame[nextIndex]);
-                console.log(game)
-                console.log(nextIndex)
             }, 1000);
             return ans
         } else {
             return ans
         }
     }
-    function shuffle(array) {
-        for (let i = array?.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-    useEffect(() => {
-        if (taskGame) setGame(taskGame[0])
 
-
-    }, [taskGame])
-
-
-    useEffect(() => {
-        if (game) {
-            let word = game?.word
-            const characters = word?.split("");
-            let fileg = game?.file?.split('.')[1]
-            let randomWord = shuffle(characters)?.join("");
-            let valid = true;
-            while (valid) {
-                if (randomWord !== word) {
-                    setTaskWord(randomWord)
-                    setFileGame(fileg)
-                    valid = false
-                } else {
-                    randomWord = shuffle(characters)?.join("");
-                }
-            }
-        }
-    }, [game])
 
 
     function TaskGame() {
-
         const [isPlaying, setIsPlaying] = useState(false);
         const audioRef = useRef(null);
 
@@ -105,12 +69,12 @@ function Game({ taskGame, uuid, level, mode }) {
                 }, 4000);
             }
         };
-        if (fileGame === 'png') {
+        if (game?.file?.split('.')[1] === 'png') {
             return (
                 <Image src={`http://localhost:8000/${game?.file}`} layout="fill"
                     objectFit="contain" alt="sapi" priority />
             )
-        } else if (fileGame == 'mp3') {
+        } else if (game?.file?.split('.')[1] == 'mp3') {
             return (
                 <>
                     <button onClick={handlePlayPause}>
@@ -118,50 +82,45 @@ function Game({ taskGame, uuid, level, mode }) {
                     </button>
                     <audio ref={audioRef} src={`http://localhost:8000/${game?.file}`} />
                 </>
+
             )
         }
     }
-    const [disabledButton, setDisabledButton] = useState([])
-    function handleType(e, i) {
-        const letter = e.target.innerText
-        console.log(i)
-        typeAnswer(letter)
-        setDisabledButton([...disabledButton, i])
-        if (!isCount) {
-            setIsCountdownActive(Date.now())
-            setIsCount(true)
-        }
-    }
-
     function Soal() {
 
-        return (
-            <>
-                <div className='w-72 h-48 bg-bggameplay border-2 border-bingu rounded-lg mt-8 shadow-lg grid place-content-center relative'>
-                    <TaskGame />
-                </div>
-                <div className="w-72 flex justify-between mt-4">
-                    {
-                        taskWord?.split('').map((e, i) => (
-                            <button type="button" key={i}
-                                className={disabledButton.includes(i)
-                                    ?
-                                    'w-10 h-10 border-white outline-bingu bg-bingu bg-bggameplay border-2 rounded-md grid place-content-center text-white font-cubano text-xl duration-300'
-                                    :
-                                    'w-10 h-10 border-bingu bg-bggameplay border-2 rounded-md grid place-content-center text-bingu font-cubano text-xl duration-300'
-                                }
-                                onClick={(e) => handleType(e, i)}
-                                disabled={disabledButton.includes(i)}
-                            >{e}</button>
-                        ))
-                    }
-                </div>
-            </>
-        )
+     
+            let word = game?.word
+            const characters = word?.split("");
+            const randomWord = shuffle(characters)?.join("");
 
+            function shuffle(array) {
+                for (let i = array?.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+            function handleType(e) {
+                const word = e?.target?.innerText
+                typeAnswer(word)
+                if (!isCount) {
+                    setIsCountdownActive(Date.now())
+                    setIsCount(true)
+                }
+            }
+           
+            return (
+                <>
+                    <div className='w-72 h-48 bg-bggameplay border-2 border-bingu rounded-lg mt-8 shadow-lg grid place-content-center relative'>
+                        <TaskGame />
+                    </div>
+                    <div className="w-72 flex justify-between mt-4">
+                        <Soal checkWord={handleType} randomWord={randomWord} />
+                    </div>
+                </>
+            )
+        
     }
-
-
     if (gameDone) {
         return (
             <h1>test</h1>

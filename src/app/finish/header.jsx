@@ -28,7 +28,7 @@ function Header({ level, totalTrue, totalTask }) {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex w-full justify-center gap-2 px-4 pt-6">
-                <Image src="/assets/img/icon-bigstars.png" alt="big stars" width={72} height={56} />
+                <Image src="/assets/img/icon-bigstars.png" alt="big stars" width={72} height={56} priority />
                 <div className='-skew-y-2'>
                     <h2 className='text-4xl italic font-cubano text-white outline-title'> HASIL BELAJAR</h2>
                 </div>

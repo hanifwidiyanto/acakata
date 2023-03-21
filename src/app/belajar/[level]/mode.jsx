@@ -7,12 +7,12 @@ import Link from 'next/link'
 
 
 
-function Mode({ onCloseClick, star }) {
+function Mode({ onCloseClick, star, level }) {
     function RenderMode({ star }) {
         if (star === 0) {
             return (
                 <>
-                    <Link href="/play/1/easy" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
@@ -25,7 +25,7 @@ function Mode({ onCloseClick, star }) {
                         </div>
                         <span className='text-xl'>medium</span>
                     </button>
-                    <button type='buttin' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
+                    <button type='button' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
@@ -39,20 +39,20 @@ function Mode({ onCloseClick, star }) {
         if (star === 1) {
             return (
                 <>
-                    <Link href="/play/1/easy" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link  href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>easy</span>
                     </Link>
-                    <Link href="/play/1/medium" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link  href={`play/${level}/medium`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>medium</span>
                     </Link>
-                    <button type='buttin' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
+                    <button type='button' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
@@ -66,20 +66,20 @@ function Mode({ onCloseClick, star }) {
         if (star === 2 || star === 3) {
             return (
                 <>
-                    <Link href="/play/1/easy" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link  href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>easy</span>
                     </Link>
-                    <Link href="/play/1/medium" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link  href={`play/${level}/medium`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>medium</span>
                     </Link>
-                    <Link href="/play/1/hard" className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <Link  href={`play/${level}/hard`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
@@ -91,7 +91,6 @@ function Mode({ onCloseClick, star }) {
             )
         }
     }
-    console.log(star)
     return (
         <>
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
