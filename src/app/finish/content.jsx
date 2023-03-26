@@ -46,7 +46,7 @@ function Content({ totalTrue, totalTask, level, mode, time }) {
                     <div className="w-fit">
                         <Image src="/assets/img/icon-finish.png" width={16} height={12} priority />
                     </div>
-                    <span className="font-cubano outline-title text-white text-2xl italic">{totalTrue}/5</span>
+                    <span className="font-cubano outline-title text-white text-2xl italic">{totalTrue}/{totalTask}</span>
                     <span className="font-cubano outline-title text-kuning -rotate-6 text-sm shadow-md relative -left-6 top-4">benar</span>
                 </div>
                 <div className=" flex gap-2 items-center">

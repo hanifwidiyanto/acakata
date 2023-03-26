@@ -1,0 +1,28 @@
+belajar page
+- loading back
+- loading ke play
+
+play page
+- setTrue nya gausah ada
+- dibuat 500ms aja untuk validate answer nya
+- dibuat useState(1) ya countTrue nya
+- dibuat lagu ketika dia mulai klik
+- bumper
+- menghitung score screen loading
+- audio icon
+
+finish page
+- bumper
+- sound
+- /5 nya kayaknya blm deh
+- pastiin lagi ya templatingnya
+
+home page
+- cara bermain
+- papan peringkat
+
+--
+
+upload youtube
+
+rapihin route nya , banyak yang gakepake

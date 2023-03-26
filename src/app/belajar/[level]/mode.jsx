@@ -1,23 +1,30 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/legacy/image'
-import Link from 'next/link'
+import Loading from './loading'
+import { useRouter } from 'next/navigation'
 
 
 
 function Mode({ onCloseClick, star, level }) {
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
+    const handlePlay = (href) => {
+        setIsLoading(true)
+        router.push(href)
+    }
     function RenderMode({ star }) {
         if (star === 0) {
             return (
                 <>
-                    <Link href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <button onClick={() => handlePlay(`play/${level}/easy`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>easy</span>
-                    </Link>
+                    </button>
                     <button type='button' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
@@ -39,19 +46,19 @@ function Mode({ onCloseClick, star, level }) {
         if (star === 1) {
             return (
                 <>
-                    <Link  href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <button onClick={() => handlePlay(`play/${level}/easy`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>easy</span>
-                    </Link>
-                    <Link  href={`play/${level}/medium`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    </button>
+                    <button onClick={() => handlePlay(`play/${level}/medium`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>medium</span>
-                    </Link>
+                    </button>
                     <button type='button' className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg grayscale'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
@@ -66,30 +73,35 @@ function Mode({ onCloseClick, star, level }) {
         if (star === 2 || star === 3) {
             return (
                 <>
-                    <Link  href={`play/${level}/easy`} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    <button  onClick={()=> handlePlay(`play/${level}/easy`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>easy</span>
-                    </Link>
-                    <Link  href={`play/${level}/medium`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    </button>
+                    <button onClick={() => handlePlay(`play/${level}/medium`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>medium</span>
-                    </Link>
-                    <Link  href={`play/${level}/hard`}  className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
+                    </button>
+                    <button onClick={() => handlePlay(`play/${level}/hard`)} className='bg-btn-done font-cubano w-[192px] h-[48px] bg-contain bg-no-repeat bg-center text-center flex items-center justify-center gap-4 text-white outline-title text-lg'>
                         <div className='flex'>
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                             <Image src="/assets/img/icon-star.png" width={24} height={24} />
                         </div>
                         <span className='text-xl'>hard</span>
-                    </Link>
+                    </button>
                 </>
             )
         }
+    }
+    if (isLoading) {
+        return (
+            <Loading />
+        )
     }
     return (
         <>

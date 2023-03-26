@@ -2,14 +2,17 @@
 
 import React from 'react'
 import Image from 'next/image'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 function Footer({ isCountdownActive, taskGame, uuid, level, mode, countTrue }) {
+
+
   const router = useRouter()
-  const [countdown, setCountdown] = useState('5:00'); // waktu awal 5 menit
+  const [countdown, setCountdown] = useState('5:00'); // waktu awal 5 menitc
 
   useEffect(() => {
+
     let intervalId;
     if (isCountdownActive > 1) {
       intervalId = setInterval(() => {
@@ -28,15 +31,55 @@ function Footer({ isCountdownActive, taskGame, uuid, level, mode, countTrue }) {
       clearInterval(intervalId);
     }
     return () => clearInterval(intervalId);
+
   }, [countdown, isCountdownActive]);
 
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true)
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.play();
+    audio.loop = true;
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  // Function to toggle play/pause
+  function togglePlay() {
+    const audio = audioRef.current;
+    if (audio.paused) {
+      audio.play();
+      setIsPlaying(true)
+    } else {
+      audio.pause();
+      setIsPlaying(false)
+    }
+  }
+
+  let audioSrc = '';
+  if (mode === 'easy') {
+    audioSrc = '/assets/sound/game-1star.mp3';
+  } else if (mode === 'medium') {
+    audioSrc = '/assets/sound/game-2star.mp3';
+  } else if (mode === 'hard') {
+    audioSrc = '/assets/sound/game-3star.mp3';
+  }
+
+
+
   return (
-    <div className='flex w-full justify-between p-4'>
-      <div className='w-24 bg-ping rounded-full px-4 py-2 border-2 border-bingu flex gap-2 font-cubano text-white outline-title justify-center'>
-        {countdown}
+    <>
+      <audio ref={audioRef} src={audioSrc} />
+      <div className='flex w-full justify-between p-4'>
+        <div className='w-24 bg-ping rounded-full px-4 py-2 border-2 border-bingu flex gap-2 font-cubano text-white outline-title justify-center'>
+          {countdown}
+        </div>
+        <Image src={isPlaying ? '/assets/img/btn-sound.png' : '/assets/img/btn-nosound.png'} width={34} height={34} priority className="active:scale-90 duration-100 cursor-pointer" alt="btn sound" onClick={togglePlay} />
       </div>
-      <Image src="/assets/img/btn-sound.png" alt="btn sound" width={34} height={34} className="active:scale-90 duration-100 cursor-pointer" />
-    </div>
+    </>
   )
 }
 

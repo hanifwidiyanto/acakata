@@ -1,10 +1,11 @@
 'use client'
 
-import React, { useEffect, useState, useRef, useCallback } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/navigation'
 import Footer from './footer'
 import { FaPlay, FaStop } from 'react-icons/fa';
+import { RiCloseCircleFill, RiCloseCircleLine } from "react-icons/ri";
 
 function Game({ taskGame, uuid, level, mode }) {
     const router = useRouter()
@@ -14,13 +15,15 @@ function Game({ taskGame, uuid, level, mode }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [game, setGame] = useState(taskGame[currentIndex])
     const [answer, setAnswer] = useState('')
-    const [countTrue, setCountTrue] = useState(0)
+    const [countTrue, setCountTrue] = useState(1)
     const [gameDone, setGameDone] = useState(false)
     const [isCount, setIsCount] = useState(false)
     const [key, setKey] = useState(0); // state tambahan
     const [taskWord, setTaskWord] = useState('')
     const [fileGame, setFileGame] = useState('')
-
+    const [deleteAns, setDeleteAns] = useState(false)
+    const [isWrong, setIsWrong] = useState(false)
+    const [isTrue, setIsTrue] = useState(false)
     const typeAnswer = (e) => {
         if (answer.length < game?.word?.length) {
             setAnswer(answer + e)
@@ -34,21 +37,29 @@ function Game({ taskGame, uuid, level, mode }) {
                 if (ans == game?.word) {
                     let c = countTrue
                     setCountTrue(c + 1);
-                    setKey(c + 1);
+                    setAnswer('')
+                    setKey(c + 1)
+                    setDeleteAns(false)
+                    setDisabledButton([])
+                    const nextIndex = (currentIndex + 1) % taskGame.length;
+                    setCurrentIndex(nextIndex)
+                    if (nextIndex === 0) {
+                        setGameDone(true)
+                        const timeSpend = Date.now() - isCountdownActive
+                        router.push(`/finish?true=${countTrue}&task=${taskGame.length}&uuid=${uuid}&level=${level}&mode=${mode}&time=${timeSpend}`)
+                    }
+                    setGame(taskGame[nextIndex]);
+                } else if (ans !== game?.word) {
+                    setIsWrong(true)
+                    setTimeout(() => {
+                        setAnswer('')
+                        console.log('oks')
+                        setIsWrong(false)
+                        setDisabledButton([])
+                        setCurrentIndex(currentIndex);
+                    }, 2400);
                 }
-                setAnswer('')
-                setDisabledButton([])
-                const nextIndex = (currentIndex + 1) % taskGame.length;
-                setCurrentIndex(nextIndex);
-                if (nextIndex === 0) {
-                    setGameDone(true)
-                    const timeSpend = Date.now() - isCountdownActive
-                    router.push(`/finish?true=${countTrue}&task=${taskGame.length}&uuid=${uuid}&level=${level}&mode=${mode}&time=${timeSpend}`)
-                }
-                setGame(taskGame[nextIndex]);
-                console.log(game)
-                console.log(nextIndex)
-            }, 1000);
+            }, 500);
             return ans
         } else {
             return ans
@@ -85,7 +96,8 @@ function Game({ taskGame, uuid, level, mode }) {
                 }
             }
         }
-    }, [game])
+
+    }, [game, gameDone])
 
 
     function TaskGame() {
@@ -127,12 +139,18 @@ function Game({ taskGame, uuid, level, mode }) {
         console.log(i)
         typeAnswer(letter)
         setDisabledButton([...disabledButton, i])
+        setDeleteAns(true)
         if (!isCount) {
             setIsCountdownActive(Date.now())
             setIsCount(true)
         }
     }
 
+    function handleDelete() {
+        setAnswer('')
+        setDisabledButton([])
+        setDeleteAns(false)
+    }
     function Soal() {
 
         return (
@@ -146,7 +164,7 @@ function Game({ taskGame, uuid, level, mode }) {
                             <button type="button" key={i}
                                 className={disabledButton.includes(i)
                                     ?
-                                    'w-10 h-10 border-white outline-bingu bg-bingu bg-bggameplay border-2 rounded-md grid place-content-center text-white font-cubano text-xl duration-300'
+                                    'w-10 h-10 border-white outline-bingu bg-bingu border-2 rounded-md grid place-content-center text-white font-cubano text-xl duration-300'
                                     :
                                     'w-10 h-10 border-bingu bg-bggameplay border-2 rounded-md grid place-content-center text-bingu font-cubano text-xl duration-300'
                                 }
@@ -161,15 +179,30 @@ function Game({ taskGame, uuid, level, mode }) {
 
     }
 
-
+    function WrongAns() {
+        return (
+            <div className={isWrong ? "fixed top-0 left-0 h-screen w-full flex justify-center items-center z-50 duration-300 opacity-1 visible" : "fixed top-0 left-0 h-screen w-full flex justify-center items-center z-50 opacity-0 invisible duration-300"}>
+                <Image src="/assets/img/gif-wrong.gif" width={200} height={200} autoPlay />
+            </div>
+        )
+    }
+    function TrueAns() {
+        return (
+            <div className={isTrue ? "fixed top-0 left-0 h-screen w-full flex justify-center items-center z-50 duration-300 opacity-1 visible" : "fixed top-0 left-0 h-screen w-full flex justify-center items-center z-50 opacity-0 invisible duration-300"}>
+                <Image src="/assets/img/gif-true.gif" width={200} height={200} autoPlay />
+            </div>
+        )
+    }
     if (gameDone) {
         return (
-            <h1>test</h1>
+            <h1>menghitung skor</h1>
         )
     } else {
 
         return (
             <>
+                {answer !== '' && <WrongAns />}
+                {answer !== '' && <TrueAns />}
                 <div className="flex w-full justify-center flex-col items-center">
                     <div className="bg-container-gameplay w-[321px] h-[84px] bg-no-repeat bg-center bg-contain flex justify-center items-center relative text-center flex-col">
                         <div className='font-cubano text-2xl outline-title text-white flex flex-col gap-0 relative -top-2'>
@@ -181,6 +214,13 @@ function Game({ taskGame, uuid, level, mode }) {
                     <form className='w-72 mt-6'>
                         <input type="text" className='w-full bg-transparent border-b-2 text-center text-white outline-title font-cubano text-xl' value={handleAnswer(answer)} disabled />
                     </form>
+                    <div className="mt-12 -mb-8">
+                        {deleteAns
+                            ?
+                            <RiCloseCircleFill className="w-12 h-12 text-white" onClick={handleDelete} /> :
+                            <RiCloseCircleLine className="w-12 h-12 text-white" />
+                        }
+                    </div>
                 </div>
                 <Footer isCountdownActive={isCountdownActive} taskGame={taskGame} countTrue={countTrue + 1} level={level} mode={mode} uuid={uuid} />
             </>

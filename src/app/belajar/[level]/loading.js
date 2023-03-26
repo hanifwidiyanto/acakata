@@ -36,7 +36,7 @@ function Loading() {
     }, [dots]);
 
     return (
-        <div className="h-screen flex flex-col justify-center items-center">
+        <div className="h-screen flex flex-col justify-center items-center w-screen fixed bg-white z-50">
             <div className="grid grid-cols-2 grid-rows-2 gap-4 font-cubano outline-title">
                 {boxes.map((box, index) => (
                     <div

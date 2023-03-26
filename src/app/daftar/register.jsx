@@ -1,161 +1,126 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from "framer-motion"
 import Link from 'next/link'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import axios from 'axios'
+import Loading from '../loading'
+import { useRouter } from 'next/navigation'
+import validateEmail from '@/utils/validateEmail'
 
 
+function Register({ name, email, avatar }) {
 
-function Register() {
+    const router = useRouter()
+    const data = validateEmail(email)
 
-
-
+    useEffect(() => {
+        if (data && typeof data.msg === 'object' && Object.keys(data.msg).length === 0) {
+            const a = 'a'
+        } else {
+            router.push('/')
+        }
+    }, [data])
+    const [loading, setLoading] = useState(false)
     const onSubmit = async (values, actions) => {
-        // push db
-        console.log('submitted')
+        await axios.post('http://localhost:8000/user/', values)
+            .then(res => {
+                console.log(res)
+                setLoading(true)
+                router.push('/')
+            }).catch(err => {
+                console.log(err)
+            })
+
     }
 
     const SchemaForm = yup.object().shape({
-        fullName: yup.string().required('Nama Kamu Harus Diisi Ya!'),
-        dd: yup.string().required('Tanggal Lahir Kamu Harus Diisi Ya!'),
-        month: yup.string().required('Bulan Lahir Kamu Harus Diisi Ya!'),
-        year: yup.string().required('Tahun Lahir Kamu Harus Diisi Ya!'),
+        // name: yup.string().required('Nama Kamu Harus Diisi Ya!'),
+        usia: yup.number().required('Usia kamu harus diisi ya')
     })
 
     const { values, handleBlur, handleChange, handleSubmit, errors } = useFormik({
         initialValues: {
-            fullName: '',
-            dd: '',
-            month: '',
-            year: '',
+            name: name,
+            email: email,
+            avatar: avatar,
+            usia: '',
+            timeSpend: 0,
+            level: 1,
+            totalStars: 0
         },
         validationSchema: SchemaForm,
         onSubmit
     })
-    return (
-        <>
-            <audio autoPlay>
-                <source src="/assets/sound/sfx-jump.mp3" type="audio/mpeg" />
-            </audio>
-            {errors && Object.keys(errors).length > 0 && (
-                <div className='absolute top-10 flex justify-center sm:w-fit w-full'>
-                    <div>
-                        {Object.values(errors).map((error, index) => (
+    if (loading) {
+        return <Loading />
+    } else {
+        return (
+            <>
+                <audio autoPlay>
+                    <source src="/assets/sound/sfx-jump.mp3" type="audio/mpeg" />
+                </audio>
+                {errors && Object.keys(errors).length > 0 && (
+                    <div className='absolute top-10 flex justify-center sm:w-fit w-full'>
+                        <div>
+                            {Object.values(errors).map((error, index) => (
 
-                            <motion.div
-                                initial={{ y: "30%", opacity: "0" }}
-                                animate={{ y: "0%", opacity: "1" }}
-                                transition={{ delay: index * 1.2, duration: .2 }}
+                                <motion.div
+                                    initial={{ y: "30%", opacity: "0" }}
+                                    animate={{ y: "0%", opacity: "1" }}
+                                    transition={{ delay: index * 1.2, duration: .2 }}
 
-                                key={index}
-                                className='bg-errorsign p-4 bg-center bg-contain bg-no-repeat grid place-content-center font-cubano text-sm text-white outline-title'>{error}</motion.div>
-                        ))}
+                                    key={index}
+                                    className='bg-errorsign p-4 bg-center bg-contain bg-no-repeat grid place-content-center font-cubano text-sm text-white outline-title'>{error}</motion.div>
+                            ))}
 
+                        </div>
                     </div>
-                </div>
-            )}
-            <motion.div
-                initial={{ y: "250%" }}
-                animate={{ y: "0%" }}
-            >
-                <div className='bg-container-daftar w-72 h-96 bg-contain bg-no-repeat bg-center'>
-                    <div className='flex justify-center w-full pt-10'>
-                        <h1 className='font-cubano text-3xl text-white outline-title'>daftar</h1>
-                    </div>
+                )}
+                <motion.div
+                    initial={{ y: "250%" }}
+                    animate={{ y: "0%" }}
+                >
+                    <div className='bg-container-daftar w-72 h-96 bg-contain bg-no-repeat bg-center'>
+                        <div className='flex justify-center w-full pt-10'>
+                            <h1 className='font-cubano text-3xl text-white outline-title'>daftar</h1>
+                        </div>
 
-                    <div className='px-8 pt-8'>
+                        <div className='px-8 pt-8'>
 
-                        <form autoComplete='off' onSubmit={handleSubmit} className='flex flex-col gap-2'>
-                            <label className='outline-title text-white font-cubano text-lg'>Nama Lengkap</label>
-                            <div className='flex w-full justify-between'>
-                                <input type="text" className='w-full h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center font-cubano placeholder-bingu text-bingu focus:outline-bingu pl-2' placeholder='nama lengkap kamu' name="fullName" onChange={handleChange} onBlur={handleBlur} />
+                            <form autoComplete='off' onSubmit={handleSubmit} className='flex flex-col gap-2'>
+                                <label className='outline-title text-white font-cubano text-lg'>Nama Lengkap</label>
+                                <div className='flex w-full justify-between'>
+                                    <input type="text" className='w-full h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center font-cubano placeholder-bingu text-bingu focus:outline-bingu pl-2' placeholder='nama lengkap kamu' name="name" onChange={handleChange} onBlur={handleBlur} value={values.name} />
 
-                            </div>
-                            <label className='outline-title mt-2 text-white font-cubano text-lg'>Tanggal Lahir</label>
-                            <div className='flex w-full justify-between'>
-                                <select type="text" className='w-10 h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center text-center font-cubano placeholder-bingu text-bingu focus:outline-bingu appearance-none' placeholder='01' name="dd" onChange={handleChange} onBlur={handleBlur}>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                    <option value="19">19</option>
-                                    <option value="20">20</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                    <option value="23">23</option>
-                                    <option value="24">24</option>
-                                    <option value="25">25</option>
-                                    <option value="26">26</option>
-                                    <option value="27">27</option>
-                                    <option value="28">28</option>
-                                    <option value="29">29</option>
-                                    <option value="30">30</option>
-                                    <option value="31">31</option>
-                                </select>
-                                <select type="text" className='w-24 h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center text-center font-cubano placeholder-bingu text-bingu focus:outline-bingu appearance-none' placeholder='Januari' name="month" onChange={handleChange} onBlur={handleBlur}>
-                                    <option value="Januari">Januari</option>
-                                    <option value="Februari">Februari</option>
-                                    <option value="Maret">Maret</option>
-                                    <option value="April">April</option>
-                                    <option value="Mei">Mei</option>
-                                    <option value="Juni">Juni</option>
-                                    <option value="Juli">Juli</option>
-                                    <option value="Agustus">Agustus</option>
-                                    <option value="September">September</option>
-                                    <option value="Oktober">Oktober</option>
-                                    <option value="Novemeber">Novemeber</option>
-                                    <option value="Desember">Desember</option>
-                                </select>
-                                <select type="text" className='w-12 h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center text-center font-cubano placeholder-bingu text-bingu focus:outline-bingu appearance-none' placeholder='2008' name="year" onChange={handleChange} onBlur={handleBlur}>
-                                    <option value="2008">2008</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2020">2020</option>
-                                </select>
-                            </div>
-                            <div className='flex justify-center w-full mt-3 active:scale-90 duration-100 cursor-pointer'>
-                                <div className='w-fit'>
-                                    <button type='submit' className='bg-btn-login font-cubano w-[110px] h-[36px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-lg'>daftar</button>
                                 </div>
-                            </div>
-                        </form>
+                                <label className='outline-title text-white font-cubano text-lg'>Usia</label>
+                                <div className='flex w-full justify-between'>
+                                    <input type="text" className='w-full h-8 border-2 border-bingu rounded-md bg-bgform grid place-content-center font-cubano placeholder-bingu text-bingu focus:outline-bingu pl-2' placeholder='usia' name="usia" onChange={handleChange} onBlur={handleBlur} />
 
+                                </div>
+
+                                <div className='flex justify-center w-full mt-3 active:scale-90 duration-100 cursor-pointer'>
+                                    <div className='w-fit'>
+                                        <button type='submit' className='bg-btn-login font-cubano w-[110px] h-[36px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-lg'>daftar</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
                     </div>
-                </div>
-                <div className='px-4 -mt-3 flex justify-between w-full'>
-                    <span className='font-cubano outline-title text-white text-lg '>sudah punya akun?</span>
-                    <div className='active:scale-90 duration-100 cursor-pointer'>
-                        <Link href="./masuk" className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm'>masuk </Link>
+                    <div className='px-4 -mt-3 flex justify-between w-full'>
+                        <span className='font-cubano outline-title text-white text-lg '>sudah punya akun?</span>
+                        <div className='active:scale-90 duration-100 cursor-pointer'>
+                            <Link href="./masuk" className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm'>masuk </Link>
+                        </div>
                     </div>
-                </div>
-            </motion.div>
-        </>
-    )
+                </motion.div>
+            </>
+        )
+    }
 }
 
 export default Register

@@ -18,7 +18,7 @@ function Game({ level }) {
     const [video, setVideo] = useState('https://www.youtube.com/embed/R0caSJYTXiw')
     const [idVideo, setIdVideo] = useState('kV_SDN9QYM0')
     // const tempDurasi = getDuration(idVideo)
-    const [durasi, setDurasi] = useState([4, 32])
+    const [durasi, setDurasi] = useState([2, 10])
 
     // function filterDurasi(d) {
 
@@ -79,10 +79,6 @@ function Game({ level }) {
             const getIdVideo = materi?.thumb?.split('/')[4]
             setIdVideo(getIdVideo)
         }
-        // console.log(tempDurasi)
-        // if (tempDurasi) {
-        //     setDurasi(filterDurasi(tempDurasi.items[0].contentDetails.duration))
-        // }
         if (timePlay & timeStop) {
             const timeSpend = timeStop - timePlay
             const prevTimeSpend = dataUser?.timeSpend
