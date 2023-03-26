@@ -19,9 +19,22 @@ const nextConfig = {
         hostname: 'localhost',
         port: '8000',
         pathname: '/assets/*/*',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/a/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.shareicon.net',
+        port: '',
+        pathname: '/data/*/*/*/*/*',
+      },
+      // https://www.shareicon.net/data/128x128/2016/06/27/787474_man_512x512.png
     ],
- 
+
   },
 
 }

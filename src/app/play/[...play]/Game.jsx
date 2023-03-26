@@ -34,7 +34,7 @@ function Game({ taskGame, uuid, level, mode }) {
     const handleAnswer = (ans) => {
         if (ans.length == game?.word?.length || ans.length > game?.word?.length) {
             setTimeout(() => {
-                if (ans == game?.word) {
+                if (ans.toLowerCase() == game?.word.toLowerCase()) {
                     let c = countTrue
                     setCountTrue(c + 1);
                     setAnswer('')
@@ -81,7 +81,8 @@ function Game({ taskGame, uuid, level, mode }) {
 
     useEffect(() => {
         if (game) {
-            let word = game?.word
+            let word = game?.word.toLowerCase()
+            console.log(word)
             const characters = word?.split("");
             let fileg = game?.file?.split('.')[1]
             let randomWord = shuffle(characters)?.join("");
