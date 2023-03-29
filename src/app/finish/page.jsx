@@ -8,6 +8,7 @@ import Footer from './footer'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
 import axios from 'axios'
+import Bumper from './bumper'
 
 function page() {
     function getStar(mode) {
@@ -30,6 +31,7 @@ function page() {
             <Header totalTrue={totalTrue} totalTask={totalTask} level={level} />
             <Content totalTrue={totalTrue} totalTask={totalTask} level={level} mode={mode} time={time} />
             <Footer level={level} mode={mode} stars={stars} uuid={uuid} totalTrue={totalTrue} totalTask={totalTask} />
+            <Bumper totalTrue={totalTrue} totalTask={totalTask} />
         </div>
     )
 }

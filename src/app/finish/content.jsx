@@ -37,9 +37,6 @@ function Content({ totalTrue, totalTask, level, mode, time }) {
     }
 
     function ResultScoreAndTime() {
-        const spendTime = () => {
-
-        }
         return (
             <div className="absolute top-24 left-5 z-20 flex flex-col gap-3">
                 <div className=" flex gap-2 items-center">

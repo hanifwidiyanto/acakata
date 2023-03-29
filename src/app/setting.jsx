@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react'
 import axios from 'axios'
 import Image from 'next/legacy/image'
 import { useRouter } from 'next/navigation'
+import Loading from './loading'
 
 function Setting({ initValue, onCloseClick }) {
     const router = useRouter()
@@ -47,9 +48,18 @@ function Setting({ initValue, onCloseClick }) {
         onCloseClick()
         router.refresh()
         // harusnya pake alert udah berhasil gt, tapi nanti aja dibuat , ribet itu mesti bikin components nya dulu
+        // gajadi bikin alert soalnya ga sempet waktunya wkakakak
     }
-
-
+    const [isLoading, setIsLoading] = useState(false)
+    function handleOut() {
+        setIsLoading(true)
+        signOut()
+    }
+    if (isLoading) {
+        return (
+            <Loading />
+        )
+    }
     return (
         <>
             <div className='fixed h-screen w-screen bg-black z-40 opacity-40'>
@@ -78,7 +88,7 @@ function Setting({ initValue, onCloseClick }) {
                     <div className='flex w-full justify-between items-end'>
                         <button type='submit' className='bg-btn-login font-cubano w-[80px] h-[28px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title text-md mt-6'>submit</button>
 
-                        <div onClick={() => signOut()} className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm active:scale-90 duration-100 cursor-pointer'>keluar </div>
+                        <div onClick={() => handleOut()} className='bg-btn-nologin font-cubano w-[70px] h-[24px] bg-contain bg-no-repeat bg-center text-center grid place-content-center text-white outline-title  text-sm active:scale-90 duration-100 cursor-pointer'>keluar </div>
 
                     </div>
                 </form>
