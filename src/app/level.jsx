@@ -3,12 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/legacy/image";
-import getUsersByID from "@/utils/getUsersById";
 import Loading from "./loading";
 import { useRouter } from "next/navigation";
+import GetUsersByID from "@/utils/getUsersById";
 
 function Level({ onCloseClick, level, uuid }) {
-  const dataUser = getUsersByID(uuid);
+  const dataUser = GetUsersByID(uuid)
   const initValue = {
     name: "",
     email: "",
@@ -102,18 +102,21 @@ function Level({ onCloseClick, level, uuid }) {
       return (
         <>
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={24}
             height={24}
             priority
           />
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={32}
             height={32}
             priority
           />
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={24}
             height={24}
@@ -126,18 +129,21 @@ function Level({ onCloseClick, level, uuid }) {
       return (
         <>
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={24}
             height={24}
             priority
           />
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={32}
             height={32}
             priority
           />
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={24}
             height={24}
@@ -150,18 +156,21 @@ function Level({ onCloseClick, level, uuid }) {
       return (
         <>
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={24}
             height={24}
             priority
           />
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={32}
             height={32}
             priority
           />
           <Image
+            alt="star empty"
             src="/assets/img/icon-star-empty.png"
             width={24}
             height={24}
@@ -174,18 +183,21 @@ function Level({ onCloseClick, level, uuid }) {
       return (
         <>
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={24}
             height={24}
             priority
           />
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={32}
             height={32}
             priority
           />
           <Image
+            alt="star"
             src="/assets/img/icon-star.png"
             width={24}
             height={24}

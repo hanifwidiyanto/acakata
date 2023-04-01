@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Header from './header'
 import Leaderboard from './leaderboard'
 
-function page() {
+function Page() {
 
     const [dataAlluser, setDataAllUsers] = useState([])
     function calculateScore(item) {
@@ -34,4 +34,4 @@ function page() {
     )
 }
 
-export default page
+export default Page

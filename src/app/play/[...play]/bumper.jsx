@@ -10,7 +10,6 @@ function Bumper({ game, fileGame, taskGame }) {
     new Audio("/assets/sound/instruction/lihat-gambar.mp3")
   );
   useEffect(() => {
-    console.log(task[orderGame]);
     if (task[orderGame]?.file?.split('.')[1] == "mp3") {
       dengar.play();
     } else if (task[orderGame]?.file?.split('.')[1] == "png") {
@@ -18,8 +17,7 @@ function Bumper({ game, fileGame, taskGame }) {
     }
     setOrderGame(orderGame + 1);
     if (taskGame) setTask(taskGame);
-  }, [game]);
-  console.log(task);
+  }, [game, dengar, lihat, orderGame, task, taskGame]);
 }
 
 export default Bumper;

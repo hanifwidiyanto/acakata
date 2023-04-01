@@ -8,13 +8,13 @@ import * as yup from 'yup'
 import axios from 'axios'
 import Loading from '../loading'
 import { useRouter } from 'next/navigation'
-import validateEmail from '@/utils/validateEmail'
+import ValidateEmail from '@/utils/ValidateEmail'
 
 
 function Register({ name, email, avatar }) {
 
     const router = useRouter()
-    const data = validateEmail(email)
+    const data = ValidateEmail(email)
 
     useEffect(() => {
         if (data && typeof data.msg === 'object' && Object.keys(data.msg).length === 0) {
@@ -22,7 +22,7 @@ function Register({ name, email, avatar }) {
         } else {
             router.push('/')
         }
-    }, [data])
+    }, [data, router])
     const [loading, setLoading] = useState(false)
     const onSubmit = async (values, actions) => {
         await axios.post('https://cdn.acakata.app/user/', values)

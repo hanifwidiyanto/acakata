@@ -5,14 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
-function Footer({
-  isCountdownActive,
-  taskGame,
-  uuid,
-  level,
-  mode,
-  countTrue
-}) {
+function Footer({ isCountdownActive, taskGame, uuid, level, mode, countTrue }) {
   const router = useRouter();
   const [countdown, setCountdown] = useState("5:00"); // waktu awal 5 menitc
   useEffect(() => {
@@ -38,7 +31,16 @@ function Footer({
       clearInterval(intervalId);
     }
     return () => clearInterval(intervalId);
-  }, [countdown, isCountdownActive]);
+  }, [
+    countdown,
+    isCountdownActive,
+    countTrue,
+    level,
+    mode,
+    router,
+    taskGame.length,
+    uuid,
+  ]);
 
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -46,7 +48,7 @@ function Footer({
     new Audio("/assets/sound/instruction/mulai-bermain.mp3")
   );
   useEffect(() => {
-    mulai.play()
+    mulai.play();
     const audio = audioRef.current;
     setTimeout(() => {
       audio.play();
@@ -57,8 +59,7 @@ function Footer({
     return () => {
       audio.pause();
     };
-  }, []);
-
+  }, [mulai]);
 
   // Function to toggle play/pause
   function togglePlay() {

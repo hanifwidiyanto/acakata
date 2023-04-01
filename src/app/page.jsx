@@ -7,13 +7,13 @@ import AuthCheck from "./AuthCheck";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import validateEmail from "@/utils/validateEmail";
+import ValidateEmail from "@/utils/ValidateEmail";
 import Loading from "./loading";
 
 export default function Page() {
   const { data: session } = useSession();
   const email = session?.user?.email;
-  const data = validateEmail(email);
+  const data = ValidateEmail(email);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Page() {
         `/daftar?email=${email}&name=${session?.user?.name}&avatar=${session.user.image}`
       );
     }
-  }, [data]);
+  }, [data, email, router, session?.user?.image, session?.user?.name]);
   if (isLoading) {
     return <Loading />;
   } else {

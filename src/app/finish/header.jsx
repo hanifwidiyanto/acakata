@@ -10,7 +10,7 @@ function Header({ level, totalTrue, totalTask }) {
         if (totalTrue / totalTask * 100 > 50) {
             setIsLolos(true)
         }
-    }, [])
+    }, [totalTask, totalTrue])
 
     function CheckLolos() {
         if (isLolos) {

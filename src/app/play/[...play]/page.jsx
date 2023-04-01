@@ -1,17 +1,17 @@
 "use client";
 
-import getGamesByLevel from "@/utils/getGamesBylevel";
+import GetGamesByLevel from "@/utils/GetGamesByLevel";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
 import Header from "./header";
 import { useSession } from "next-auth/react";
-import validateEmail from "@/utils/validateEmail";
+import ValidateEmail from "@/utils/ValidateEmail";
 
-export default function page({ params }) {
+export default function Page({ params }) {
   const { data: session } = useSession();
   const email = session?.user?.email;
-  const data = validateEmail(email);
-  const dataGames = getGamesByLevel(params.play[0]);
+  const data = ValidateEmail(email);
+  const dataGames = GetGamesByLevel(params.play[0]);
   const [taskGame, setTaskGame] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function page({ params }) {
       if (params.play[1] === "medium") setTaskGame(mediumWords);
       if (params.play[1] === "easy") setTaskGame(easyWords);
     }
-  }, [dataGames]);
+  }, [dataGames, params.play]);
   console.log(taskGame);
   return (
     <div className="bg-gameplay h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between">

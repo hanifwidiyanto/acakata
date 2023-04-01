@@ -123,7 +123,7 @@ function Game({ taskGame, uuid, level, mode }) {
             src={`https://cdn.acakata.app/${game?.file}`}
             layout="fill"
             objectFit="contain"
-            alt="sapi"
+            alt="game file"
             priority
           />
         </>
@@ -200,6 +200,7 @@ function Game({ taskGame, uuid, level, mode }) {
         }
       >
         <Image
+          alt="wrong gif"
           src="/assets/img/gif-wrong.gif"
           width={200}
           height={200}

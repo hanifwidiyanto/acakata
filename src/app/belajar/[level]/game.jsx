@@ -4,15 +4,15 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/legacy/image";
 import { FaPlay } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import validateEmail from "@/utils/validateEmail";
+import ValidateEmail from "@/utils/ValidateEmail";
 import axios from "axios";
 import Footer from "./footer";
-import getMateriByLevel from "@/utils/getMateri";
+import GetMateriByLevel from "@/utils/GetMateri";
 import Mode from "./mode";
-import getUsersByID from "@/utils/getUsersById";
+import GetUsersByID from "@/utils/GetUsersById";
 
 function Game({ level }) {
-  const materi = getMateriByLevel(level);
+  const materi = GetMateriByLevel(level);
   const [thumb, setThumb] = useState(
     "https://i.ytimg.com/vi/kV_SDN9QYM0/hqdefault.jpg"
   );
@@ -27,9 +27,9 @@ function Game({ level }) {
 
   const { data: session } = useSession();
   const email = session?.user?.email;
-  const dataUser = validateEmail(email);
+  const dataUser = ValidateEmail(email);
   const uuid = dataUser?.uuid;
-  const detailUser = getUsersByID(uuid);
+  const detailUser = GetUsersByID(uuid);
   const starThisLevel = detailUser?.star[level - 1]?.stars;
   const audioRef = useRef(null);
   const [timeSent, setTimeSent] = useState(false);
@@ -37,7 +37,7 @@ function Game({ level }) {
   function onPlayClick() {
     const audio = audioRef.current;
     audio.play();
-    
+
     setIsPlay(false);
     setDoneButton(false);
     setTimePlay(Date.now());
@@ -85,7 +85,14 @@ function Game({ level }) {
       }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [timeStop, running, materi]);
+  }, [
+    timeStop,
+    running,
+    materi,
+    dataUser?.timeSpend,
+    timePlay,
+    updateTimeSpend,
+  ]);
 
   const menit = Math.floor(time / 60);
   const detik = Math.round(time % 60);
@@ -117,6 +124,7 @@ function Game({ level }) {
           {isPlay ? (
             <>
               <Image
+                alt="thumbnail"
                 src={thumb}
                 width={320}
                 height={240}

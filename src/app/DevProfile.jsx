@@ -18,7 +18,7 @@ function DevProfile({ onCloseClick }) {
         <div className="absolute right-0 -top-12 cursor-pointer active:scale-90 duration-100 bg-white p-1 pb-0 rounded-md">
           <Image
             src="/assets/img/icon-close.png"
-            alt=""
+            alt="icon close"
             className=""
             onClick={onCloseClick}
             width={18}
@@ -27,6 +27,7 @@ function DevProfile({ onCloseClick }) {
         </div>
         <div className="absolute -top-16 left-4">
           <Image
+          alt="dev profile"
             src="/assets/img/icon-bigdev.png"
             width={64}
             height={96}
