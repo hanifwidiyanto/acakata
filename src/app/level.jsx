@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/legacy/image";
 import Loading from "./loading";
 import { useRouter } from "next/navigation";
-import GetUsersByID from "@/utils/getUsersById";
+import GetUsersByID from "@/utils/GetUsersById";
 
 function Level({ onCloseClick, level, uuid }) {
   const dataUser = GetUsersByID(uuid)

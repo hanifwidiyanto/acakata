@@ -1,6 +1,6 @@
 "use client";
 
-import GetGamesByLevel from "@/utils/GetGamesByLevel";
+import GetGamesByLevel from "@/utils/GetGamesBylevel";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
 import Header from "./header";
