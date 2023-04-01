@@ -32,6 +32,13 @@ const nextConfig = {
         port: '',
         pathname: '/data/*/*/*/*/*',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.acakata.app',
+        port: '',
+        pathname: '/assets/files/*',
+      },
+      // (https://cdn.acakata.app/assets/files/1678692708017_kuda.png)
       // https://www.shareicon.net/data/128x128/2016/06/27/787474_man_512x512.png
     ],
 

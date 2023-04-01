@@ -4,13 +4,11 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Image from "next/legacy/image";
 import getUsersByID from "@/utils/getUsersById";
-import Link from "next/link";
 import Loading from "./loading";
 import { useRouter } from "next/navigation";
 
 function Level({ onCloseClick, level, uuid }) {
   const dataUser = getUsersByID(uuid);
-  console.log(dataUser);
   const initValue = {
     name: "",
     email: "",

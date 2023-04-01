@@ -40,7 +40,7 @@ function Setting({ initValue, onCloseClick }) {
       },
     }));
     await axios
-      .post("http://localhost:8000/update/user/" + values.uuid, data)
+      .post("https://cdn.acakata.app/update/user/" + values.uuid, data)
       .then((res) => {
         console.log(res);
       })

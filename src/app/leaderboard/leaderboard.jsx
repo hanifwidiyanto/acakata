@@ -26,7 +26,7 @@ export default function Leaderboard({ data }) {
 
           {data?.map((e, i) => (
             <div
-              className={i <= 3 ? 'bg-container-top-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover' : 'bg-container-bottom-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover'}>
+              className={i <= 3 ? 'bg-container-top-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover' : 'bg-container-bottom-leaderboard w-full rounded-md h-[82px] bg-center bg-no-repeat bg-cover'} key={i}>
               <div
                 className="flex w-full justify-between h-full items-center px-3">
                 <div

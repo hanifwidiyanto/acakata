@@ -53,7 +53,7 @@ function Game({ level }) {
 
   const updateTimeSpend = async (data) => {
     await axios
-      .post("http://localhost:8000/update/timeSpend/" + uuid, data)
+      .post("https://cdn.acakata.app/update/timeSpend/" + uuid, data)
       .then((res) => {
         console.log(res);
         setTimeSent(true);

@@ -4,7 +4,6 @@ import getGamesByLevel from "@/utils/getGamesBylevel";
 import React, { useEffect, useState } from "react";
 import Game from "./Game";
 import Header from "./header";
-import Footer from "./footer";
 import { useSession } from "next-auth/react";
 import validateEmail from "@/utils/validateEmail";
 

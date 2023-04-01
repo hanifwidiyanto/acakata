@@ -1,6 +1,5 @@
 'use client'
 
-import getAllUsers from '@/utils/getAllUsers'
 import React, { useState, useEffect } from 'react'
 import Header from './header'
 import Leaderboard from './leaderboard'
@@ -14,7 +13,7 @@ function page() {
       }
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch('http://localhost:8000/users');
+            const response = await fetch('https://cdn.acakata.app/users');
             const data = await response.json();
             // Hitung skor untuk setiap item dan tambahkan properti "score" pada setiap item
             data.forEach(item => {

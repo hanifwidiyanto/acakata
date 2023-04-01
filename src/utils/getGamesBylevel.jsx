@@ -1,7 +1,7 @@
 import React from 'react'
 import useSWR from 'swr'
 
-const fetcher = (level) => fetch('http://localhost:8000/game/' + level).then((res) => res.json());
+const fetcher = (level) => fetch('https://cdn.acakata.app/game/' + level).then((res) => res.json());
 
 export default function getGamesByLevel(level) {
     const {data, error} = useSWR(level, fetcher)

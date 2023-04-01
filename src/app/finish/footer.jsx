@@ -17,7 +17,7 @@ function Footer({ level, mode, stars, uuid, totalTask, totalTrue }) {
         console.log(data)
         if (totalTrue / totalTask * 100 > 50 && isPost) {
             try {
-                const res = await axios.post('http://localhost:8000/finish/' + uuid, data);
+                const res = await axios.post('https://cdn.acakata.app/finish/' + uuid, data);
                 console.log(res);
 
             } catch (err) {

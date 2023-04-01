@@ -25,7 +25,7 @@ function Register({ name, email, avatar }) {
     }, [data])
     const [loading, setLoading] = useState(false)
     const onSubmit = async (values, actions) => {
-        await axios.post('http://localhost:8000/user/', values)
+        await axios.post('https://cdn.acakata.app/user/', values)
             .then(res => {
                 console.log(res)
                 setLoading(true)

@@ -120,7 +120,7 @@ function Game({ taskGame, uuid, level, mode }) {
       return (
         <>
           <Image
-            src={`http://localhost:8000/${game?.file}`}
+            src={`https://cdn.acakata.app/${game?.file}`}
             layout="fill"
             objectFit="contain"
             alt="sapi"
@@ -140,7 +140,7 @@ function Game({ taskGame, uuid, level, mode }) {
               )}
             </button>
           </div>
-          <audio ref={audioRef} src={`http://localhost:8000/${game?.file}`} />
+          <audio ref={audioRef} src={`https://cdn.acakata.app/${game?.file}`} />
         </>
       );
     }
