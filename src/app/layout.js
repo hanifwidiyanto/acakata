@@ -2,7 +2,6 @@
 
 import './globals.css'
 import AuthContext from './Auth'
-import AuthCheck from './AuthCheck'
 
 export default function RootLayout({ children }) {
   return (
