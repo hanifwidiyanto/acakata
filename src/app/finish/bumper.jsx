@@ -21,7 +21,7 @@ function Bumper({ totalTrue, totalTask }) {
       lose.play();
       gagal.play();
     }
-  }, [berhasil, finish, gagal, lose, totalTask, totalTrue]);
+  }, []);
 }
 
 export default Bumper;

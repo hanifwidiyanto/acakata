@@ -33,13 +33,7 @@ function Footer({ isCountdownActive, taskGame, uuid, level, mode, countTrue }) {
     return () => clearInterval(intervalId);
   }, [
     countdown,
-    isCountdownActive,
-    countTrue,
-    level,
-    mode,
-    router,
-    taskGame.length,
-    uuid,
+    isCountdownActive
   ]);
 
   const audioRef = useRef(null);
@@ -59,7 +53,7 @@ function Footer({ isCountdownActive, taskGame, uuid, level, mode, countTrue }) {
     return () => {
       audio.pause();
     };
-  }, [mulai]);
+  }, []);
 
   // Function to toggle play/pause
   function togglePlay() {

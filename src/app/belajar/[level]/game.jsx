@@ -88,10 +88,7 @@ function Game({ level }) {
   }, [
     timeStop,
     running,
-    materi,
-    dataUser?.timeSpend,
-    timePlay,
-    updateTimeSpend,
+    materi
   ]);
 
   const menit = Math.floor(time / 60);

@@ -14,6 +14,7 @@ export default function Play({ level, uuid }) {
     setDisplayLevel(true);
   }
   function handleClose() {
+    setDisplayLevel(false);
   }
 
   return (

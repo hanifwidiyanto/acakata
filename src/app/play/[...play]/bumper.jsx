@@ -17,7 +17,7 @@ function Bumper({ game, fileGame, taskGame }) {
     }
     setOrderGame(orderGame + 1);
     if (taskGame) setTask(taskGame);
-  }, [game, dengar, lihat, orderGame, task, taskGame]);
+  }, [game]);
 }
 
 export default Bumper;

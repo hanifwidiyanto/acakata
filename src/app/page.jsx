@@ -27,7 +27,7 @@ export default function Page() {
         `/daftar?email=${email}&name=${session?.user?.name}&avatar=${session.user.image}`
       );
     }
-  }, [data, email, router, session?.user?.image, session?.user?.name]);
+  }, [data]);
   if (isLoading) {
     return <Loading />;
   } else {

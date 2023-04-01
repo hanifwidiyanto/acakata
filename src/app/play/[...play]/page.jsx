@@ -27,7 +27,7 @@ export default function Page({ params }) {
       if (params.play[1] === "medium") setTaskGame(mediumWords);
       if (params.play[1] === "easy") setTaskGame(easyWords);
     }
-  }, [dataGames, params.play]);
+  }, [dataGames]);
   console.log(taskGame);
   return (
     <div className="bg-gameplay h-screen w-full bg-center bg-cover bg-no-repeat flex flex-col justify-between">
